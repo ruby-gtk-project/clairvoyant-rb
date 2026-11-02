@@ -1,7 +1,9 @@
 # Clairvoyant — upstream component inventory
 
 Survey of `origin/main` (Vala, meson, GTK4 >= 4.19.4 / libadwaita >= 1.8.1,
-upstream version 3.1.12) against `lib/` on the `ruby` branch.
+upstream version 3.1.12) against `lib/` on the `ruby` branch. The status
+column was refreshed after the port landed: every component below now exists
+on `ruby`.
 
 Upstream has **no `.ui` and no `.blp` files** — every widget is built in Vala
 `construct` blocks, so the inventory below comes from reading all three source
@@ -15,16 +17,16 @@ an "Ask Again" button.
 
 | # | Upstream file(s) | Port file | Kind | Exists on `ruby`? |
 |---|---|---|---:|---|
-| 1 | `src/Application.vala`, `src/Config.vala.in`, `src/config.vapi` | `lib/application.rb` | application | partial — scaffold only |
-| 2 | `src/MainWindow.vala` | `lib/main_window.rb` | window | no |
-| 3 | `src/MainWindow.vala` (header bar + About button) | `lib/main_window.rb` | header bar | no |
-| 4 | `src/MainWindow.vala` (`Adw.AboutWindow.from_appdata`), `data/metainfo.appdata.xml.in` | `lib/about_dialog.rb` | dialog | no |
-| 5 | `src/FortuneLabel.vala` | `lib/fortune_label.rb` | widget (stack of 28 pages) | no |
-| 6 | `src/FortuneLabel.vala` (the 28-entry `Content[]` table) | `lib/fortunes.rb` | data / strings | no |
-| 7 | `src/Application.vala` (`app.quit` + accels) | `lib/application.rb` | action + shortcuts | no |
-| 8 | `data/styles/style.css` | `lib/style.rb` (inline `Gtk::CssProvider`) | stylesheet | no |
-| 9 | `data/gresource.xml`, `data/icons/about-symbolic.svg` | `lib/resources.rb` (icon theme search path / resource load) | resources | no |
-| 10 | `po/` (196 locales, `po/POTFILES.in`) | `po/` + gettext in `lib/fortunes.rb` etc. | translations | no |
+| 1 | `src/Application.vala`, `src/Config.vala.in`, `src/config.vapi` | `lib/application.rb` | application | yes — `lib/application.rb` + `lib/config.rb` |
+| 2 | `src/MainWindow.vala` | `lib/main_window.rb` | window | yes |
+| 3 | `src/MainWindow.vala` (header bar + About button) | `lib/main_window.rb` | header bar | yes |
+| 4 | `src/MainWindow.vala` (`Adw.AboutWindow.from_appdata`), `data/metainfo.appdata.xml.in` | `lib/about_dialog.rb` | dialog | yes |
+| 5 | `src/FortuneLabel.vala` | `lib/fortune_label.rb` | widget (stack of 28 pages) | yes |
+| 6 | `src/FortuneLabel.vala` (the 28-entry `Content[]` table) | `lib/fortunes.rb` | data / strings | yes |
+| 7 | `src/Application.vala` (`app.quit` + accels) | `lib/application.rb` | action + shortcuts | yes |
+| 8 | `data/styles/style.css` | `lib/style.rb` (inline `Gtk::CssProvider`) | stylesheet | yes |
+| 9 | `data/gresource.xml`, `data/icons/about-symbolic.svg` | `lib/resources.rb` (icon theme search path / resource load) | resources | yes — `lib/resources.rb` + `data/icons/` |
+| 10 | `po/` (196 locales, `po/POTFILES.in`) | `po/` + gettext in `lib/fortunes.rb` etc. | translations | yes — 196 catalogues under `po/`, compiled to `locale/` |
 
 There are no pages, rows, menus, empty states or error states upstream — the
 app has no list, no navigation and no failure path.
@@ -48,13 +50,12 @@ Single-instance behaviour: `activate` presents the existing window when
 "UTF-8"`, `textdomain`) with `Config.GETTEXT_PACKAGE` /`Config.LOCALEDIR`;
 `src/Config.vala.in` supplies `APP_ID` and `VERSION` at configure time.
 
-Port status: `lib/clairvoyant/application.rb` exists but is the generated
-scaffold — a `Gtk::Application` with id `org.rubygtkproject.Clairvoyant`, an
-`Adwaita::ApplicationWindow` sized 800x600, an `Adwaita::ToolbarView`, an empty
-`Adwaita::HeaderBar` and an `Adwaita::StatusPage` reading "The Ruby port has
-not been written yet." None of it corresponds to an upstream component; the
-status page is an **extra** to delete, and the window must become
-non-resizable rather than 800x600. No actions, no accelerators.
+Port status: **ported.** `lib/application.rb` is an `Adwaita::Application`
+with `application_id` `com.cassidyjames.clairvoyant` (from `lib/config.rb`), a
+`quit` `Gio::SimpleAction` on the app with accels `Escape`, `<Ctrl>Q` and
+`<Ctrl>W`, and an `activate` handler that presents the existing window instead
+of building a second. Gettext setup lives in `lib/intl.rb`. The generated
+scaffold window and its status page are gone.
 
 ## src/MainWindow.vala — the one window: header bar, fortune, Ask Again
 
@@ -84,7 +85,13 @@ Behaviour that must be ported, not just the tree:
   `Adwaita::AboutDialog`/`AboutWindow` filled from constants or from the
   metainfo file explicitly.
 
-Port status: **absent entirely.** No `lib/main_window.rb`.
+Port status: **ported.** `lib/main_window.rb` builds the window handle, the
+vertical box, the `flat` header bar with its blank title label, the `dim-label`
+About button, the `FortuneLabel` and the `suggested-action pill` "Ask Again"
+button, with `resizable = false` and the recursing `randomize_fortune`
+(re-rolled on `realize` with `allow_current: true`). The About window is
+`lib/about_dialog.rb`, filled from `data/metainfo.appdata.xml` and
+`lib/config.rb` rather than `from_appdata`.
 
 ## src/FortuneLabel.vala — the crossfading stack of 28 answers
 
@@ -107,16 +114,16 @@ Initial state: the constructor already picks `Random.int_range (1, 29)` for
 
 | # | String | Class |
 |---:|---|---|
-| 1 | It is certain. | `success` |
-| 2 | It is decidedly so. | `success` |
-| 3 | Without a doubt. | `success` |
-| 4 | Yes—definitely. | `success` |
-| 5 | You may rely on it. | `success` |
-| 6 | As I see it, yes. | `success` |
-| 7 | Most likely. | `success` |
-| 8 | Outlook good. | `success` |
-| 9 | Yes. | `success` |
-| 10 | Signs point to yes. | `success` |
+| 1 | It is certain. | yes — `lib/application.rb` + `lib/config.rb` |
+| 2 | It is decidedly so. | yes |
+| 3 | Without a doubt. | yes |
+| 4 | Yes—definitely. | yes |
+| 5 | You may rely on it. | yes |
+| 6 | As I see it, yes. | yes |
+| 7 | Most likely. | yes |
+| 8 | Outlook good. | yes |
+| 9 | Yes. | yes — `lib/resources.rb` + `data/icons/` |
+| 10 | Signs point to yes. | yes — 196 catalogues under `po/`, compiled to `locale/` |
 | 11 | Yep! | `success` |
 | 12 | Absolutely! | `success` |
 | 13 | You bet! | `success` |
@@ -141,7 +148,11 @@ Every string is `_()`-wrapped and carries a `///TRANSLATORS:` comment (except
 apostrophes (`Don’t`, `I’ve`), an em dash in `Yes—definitely.`, and an
 ellipsis character in #21.
 
-Port status: **absent entirely.** No `lib/fortune_label.rb`, no fortune table.
+Port status: **ported.** `lib/fortune_label.rb` is the box + crossfading
+stack with pages named `"1"`..`"28"`, each a centred box holding a selectable
+label carrying `title-1` plus the fortune's `success` / `error` / `warning`
+class. The table itself is `lib/fortunes.rb`, 28 `N_()`-marked strings
+translated at display time.
 
 ## data/styles/style.css — the accent-tinted window
 
@@ -155,7 +166,9 @@ Port status: **absent entirely.** No `lib/fortune_label.rb`, no fortune table.
 Two custom properties, no classes of its own — it recolours the window from
 the user's accent colour. Loaded from the GResource bundle
 (`/com/cassidyjames/clairvoyant/style.css`); the port has to load equivalent
-CSS through a `Gtk::CssProvider` on the default display. **Absent on `ruby`.**
+CSS through a `Gtk::CssProvider` on the default display. **Ported** as
+`lib/style.rb`, which loads `data/styles/style.css` into a
+`Gtk::CssProvider` on the default display.
 
 No CSS class used in the source is defined by this stylesheet — `flat`,
 `dim-label`, `suggested-action`, `pill`, `title-1`, `success`, `warning`,
@@ -176,9 +189,10 @@ Teller`, `Comment=Ask questions, get psychic answers`,
 `Categories=Utility;Amusement;` and
 `Keywords=magic;eight;ball;8;crystal;🔮;medium;🎱;`.
 
-The port currently ships no icons and references
-`applications-engineering-symbolic` from the system theme. **Absent on
-`ruby`.**
+**Ported.** `lib/resources.rb` adds `data/icons` to the icon theme search
+path; the three SVGs ship under `data/icons/hicolor/` with upstream's names
+(`about-symbolic.svg`, `com.cassidyjames.clairvoyant.svg`,
+`com.cassidyjames.clairvoyant-symbolic.svg`).
 
 ## po/ — translations
 
@@ -186,23 +200,25 @@ The port currently ships no icons and references
 `data/launcher.desktop.in`, `data/metainfo.appdata.xml.in`,
 `src/Application.vala`, `src/FortuneLabel.vala` and `src/MainWindow.vala`.
 Translatable strings in code are exactly: the 28 fortunes, `_("About")`,
-`_("Ask Again")` and `_("translator-credits")` — 31 in total. **Nothing on
-`ruby`.**
+`_("Ask Again")` and `_("translator-credits")` — 31 in total. **Ported:** all
+196 catalogues are copied to `po/` and compiled into `locale/<lang>/LC_MESSAGES`
+against the `com.cassidyjames.clairvoyant` domain, bound in `lib/intl.rb`.
 
 ## Summary
 
 | | Upstream | `ruby` |
 |---|---:|---:|
-| Component files | 3 Vala (+1 CSS, 1 gresource) | 1 (scaffold) |
-| Distinct widget types | 8 | 5 |
-| Widget instances (counting repeaters) | ~62 | 4 |
-| Distinct CSS classes applied | 8 | 0 |
-| Signals connected | 4 (`activate`, `clicked` ×2, `realize`) | 1 (`activate`) |
-| Actions | 1 (`app.quit`, 3 accels) | 0 |
-| Translated strings | 31 | 0 |
+| Component files | 3 Vala (+1 CSS, 1 gresource) | 10 under `lib/` |
+| Distinct widget types | 8 | 8 |
+| Widget instances (counting repeaters) | ~62 | ~62 |
+| Distinct CSS classes applied | 8 | 8 |
+| Signals connected | 4 (`activate`, `clicked` x2, `realize`) | 4 |
+| Actions | 1 (`app.quit`, 3 accels) | 1 (`app.quit`, 3 accels) |
+| Translated strings | 31 | 31 |
 
-Nothing user-facing is ported yet. The three files to write are
-`lib/fortune_label.rb` (with the fortune table, inline or in
-`lib/fortunes.rb`), `lib/main_window.rb` and `lib/application.rb`; the
-existing `lib/clairvoyant/application.rb` scaffold and its status page go
-away.
+Every user-facing component upstream has a counterpart on `ruby`:
+`lib/application.rb`, `lib/main_window.rb`, `lib/about_dialog.rb`,
+`lib/fortune_label.rb`, `lib/fortunes.rb`, `lib/style.rb`,
+`lib/resources.rb`, `lib/config.rb`, `lib/intl.rb`, `lib/clairvoyant.rb`.
+Nothing upstream is unaccounted for and the port carries no extra
+user-facing component.
