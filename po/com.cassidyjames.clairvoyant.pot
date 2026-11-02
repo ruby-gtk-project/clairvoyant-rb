@@ -1,0 +1,171 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the clairvoyant package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: clairvoyant 3.1.12\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-02 16:51+0000\n"
+"PO-Revision-Date: 2026-11-02 16:51+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#. TRANSLATORS: The translator credits. Please translate this with your name(s).
+#: ../lib/about_dialog.rb:85
+msgid "translator-credits"
+msgstr ""
+
+#. TRANSLATORS: Positive response, the thing is certain to happen
+#: ../lib/fortunes.rb:25
+msgid "It is certain."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:27
+msgid "It is decidedly so."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:29
+msgid "Without a doubt."
+msgstr ""
+
+#. TRANSLATORS: Positive response, the thing is certain to happen
+#: ../lib/fortunes.rb:31
+msgid "Yes—definitely."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:33
+msgid "You may rely on it."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:35
+msgid "As I see it, yes."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:37
+msgid "Most likely."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:39
+msgid "Outlook good."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:41
+msgid "Yes."
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:43
+msgid "Signs point to yes."
+msgstr ""
+
+#. TRANSLATORS: Positive response, casual
+#: ../lib/fortunes.rb:45
+msgid "Yep!"
+msgstr ""
+
+#. TRANSLATORS: Positive response
+#: ../lib/fortunes.rb:47
+msgid "Absolutely!"
+msgstr ""
+
+#. TRANSLATORS: Positive response, casual
+#: ../lib/fortunes.rb:49
+msgid "You bet!"
+msgstr ""
+
+#: ../lib/fortunes.rb:50
+msgid "Confirmed."
+msgstr ""
+
+#. TRANSLATORS: Negative response
+#: ../lib/fortunes.rb:52
+msgid "Don’t count on it."
+msgstr ""
+
+#. TRANSLATORS: Negative response
+#: ../lib/fortunes.rb:54
+msgid "My reply is no."
+msgstr ""
+
+#. TRANSLATORS: Negative response, referring to the 8-ball's "sources"
+#: ../lib/fortunes.rb:56
+msgid "My sources say no."
+msgstr ""
+
+#. TRANSLATORS: Negative response
+#: ../lib/fortunes.rb:58
+msgid "Outlook not so good."
+msgstr ""
+
+#. TRANSLATORS: Negative response
+#: ../lib/fortunes.rb:60
+msgid "Very doubtful."
+msgstr ""
+
+#. TRANSLATORS: Negative response, casual
+#: ../lib/fortunes.rb:62
+msgid "Naw."
+msgstr ""
+
+#. TRANSLATORS: Negative response; reference to the recurring Star Wars line
+#: ../lib/fortunes.rb:64
+msgid "I’ve got a bad feeling about this…"
+msgstr ""
+
+#. TRANSLATORS: Neutral response
+#: ../lib/fortunes.rb:66
+msgid "Reply hazy, try again."
+msgstr ""
+
+#. TRANSLATORS: Neutral response
+#: ../lib/fortunes.rb:68
+msgid "Ask again later."
+msgstr ""
+
+#. TRANSLATORS: Neutral response
+#: ../lib/fortunes.rb:70
+msgid "Better not tell you now."
+msgstr ""
+
+#. TRANSLATORS: Neutral response
+#: ../lib/fortunes.rb:72
+msgid "Cannot predict now."
+msgstr ""
+
+#. TRANSLATORS: Neutral response
+#: ../lib/fortunes.rb:74
+msgid "Concentrate and ask again."
+msgstr ""
+
+#. TRANSLATORS: Neutral response; reference to a line from Yoda from Star Wars
+#: ../lib/fortunes.rb:76
+msgid "Impossible to see, the future is."
+msgstr ""
+
+#. TRANSLATORS: Neutral response; a play on the "404 Page Not Found" web browser error code
+#: ../lib/fortunes.rb:78
+msgid "404 Answer Not Found"
+msgstr ""
+
+#: ../lib/main_window.rb:84
+msgid "About"
+msgstr ""
+
+#: ../lib/main_window.rb:97
+msgid "Ask Again"
+msgstr ""

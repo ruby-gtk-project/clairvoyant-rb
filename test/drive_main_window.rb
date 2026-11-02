@@ -3,16 +3,33 @@
 # Drives the real application through everything the port puts on screen, one
 # step per turn of the GTK main loop, and writes a screenshot of each state.
 #
-#   env -u DISPLAY -u WAYLAND_DISPLAY ruby test/drive_main_window.rb
+#   xvfb-run -a ruby test/drive_main_window.rb
 #
-# Runs headlessly: GTK4 renders to an offscreen surface, so the PNGs under
-# tmp/shots are what a real session would look like.
+# The PNGs under tmp/shots are what a real session looks like. Run it under a
+# language to check the translations on screen as well:
+#
+#   LANGUAGE=de xvfb-run -a ruby test/drive_main_window.rb
+#
+# which needs the catalogues compiled first, with `rake gettext:mo:update`.
 
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 
 require 'application'
 require 'fortunes'
+require 'intl'
 require_relative 'gtk_driver'
+
+# The labels on screen are translated, so the expectations have to be too: a
+# run under LANGUAGE=de must compare against the German, not the msgid. The
+# gettext gem binds a domain to a class, so the lookup needs a class that
+# includes the app's binding rather than a bare call at the top level.
+class Expected
+  include Intl
+
+  def t(msgid) = _(msgid)
+end
+
+EXPECTED = Expected.new
 
 APP = Application.new
 
@@ -22,6 +39,7 @@ GtkDriver.drive(APP, shots: 'tmp/shots') do |d, app|
   d.step('the window') do
     app.main_window.then do |win|
       d.check('titled from the AppData') { win.window.title == 'Clairvoyant' }
+      d.check('the ask button is translated') { win.ask_button.label == EXPECTED.t('Ask Again') }
       d.check('not resizable') { !win.window.resizable? }
       d.check('header bar is flat') { win.header.css_classes.include?('flat') }
       d.check('header title is blank') { win.header.title_widget.text.to_s.empty? }
@@ -42,15 +60,22 @@ GtkDriver.drive(APP, shots: 'tmp/shots') do |d, app|
       d.check('crossfades') { stack.transition_type == Gtk::StackTransitionType::CROSSFADE }
       d.check('a page is showing') { Fortunes.page_names.include?(stack.visible_child_name) }
 
-      stack.visible_child.first_child.then do |label|
-        d.check('the answer is the page\'s fortune') do
-          label.text == Fortunes.entry(stack.visible_child_name).title
-        end
-        d.check('the answer is a selectable title') do
-          label.selectable? && label.css_classes.include?('title-1')
-        end
-        d.check('the answer is coloured by its kind') do
-          label.css_classes.include?(Fortunes.entry(stack.visible_child_name).css_class)
+      # The page the label belongs to, asked of the child itself: during a
+      # crossfade the stack's visible_child_name is already the incoming page
+      # while visible_child still answers with the outgoing one.
+      stack.visible_child.then do |page|
+        Fortunes.entry(stack.get_page(page).name).then do |fortune|
+          page.first_child.then do |label|
+            d.check('the answer is the showing page’s fortune') do
+              label.text == EXPECTED.t(fortune.title)
+            end
+            d.check('the answer is a selectable title') do
+              label.selectable? && label.css_classes.include?('title-1')
+            end
+            d.check('the answer is coloured by its kind') do
+              label.css_classes.include?(fortune.css_class)
+            end
+          end
         end
       end
     end
