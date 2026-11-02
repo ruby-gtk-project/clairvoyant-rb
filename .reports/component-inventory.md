@@ -27,6 +27,7 @@ an "Ask Again" button.
 | 8 | `data/styles/style.css` | `lib/style.rb` (inline `Gtk::CssProvider`) | stylesheet | yes |
 | 9 | `data/gresource.xml`, `data/icons/about-symbolic.svg` | `lib/resources.rb` (icon theme search path / resource load) | resources | yes — `lib/resources.rb` + `data/icons/` |
 | 10 | `po/` (196 locales, `po/POTFILES.in`) | `po/` + gettext in `lib/fortunes.rb` etc. | translations | yes — 196 catalogues under `po/`, compiled to `locale/` |
+| 11 | `data/launcher.desktop.in`, `data/meson.build` (the `i18n.merge_file` / `install_data` calls) | `data/launcher.desktop.in` + the install phase in `flake.nix` | launcher + installed data | yes — desktop entry, metainfo and hicolor icons installed, catalogues merged by `msgfmt` |
 
 There are no pages, rows, menus, empty states or error states upstream — the
 app has no list, no navigation and no failure path.
@@ -50,8 +51,9 @@ Single-instance behaviour: `activate` presents the existing window when
 "UTF-8"`, `textdomain`) with `Config.GETTEXT_PACKAGE` /`Config.LOCALEDIR`;
 `src/Config.vala.in` supplies `APP_ID` and `VERSION` at configure time.
 
-Port status: **ported.** `lib/application.rb` is an `Adwaita::Application`
-with `application_id` `com.cassidyjames.clairvoyant` (from `lib/config.rb`), a
+Port status: **ported.** `lib/application.rb` is a `Gtk::Application` with
+`Adwaita.init` called by hand — `Adwaita::Application` is unusable in the Ruby
+bindings — carrying `application_id` `com.cassidyjames.clairvoyant` (from `lib/config.rb`), a
 `quit` `Gio::SimpleAction` on the app with accels `Escape`, `<Ctrl>Q` and
 `<Ctrl>W`, and an `activate` handler that presents the existing window instead
 of building a second. Gettext setup lives in `lib/intl.rb`. The generated
@@ -114,16 +116,16 @@ Initial state: the constructor already picks `Random.int_range (1, 29)` for
 
 | # | String | Class |
 |---:|---|---|
-| 1 | It is certain. | yes — `lib/application.rb` + `lib/config.rb` |
-| 2 | It is decidedly so. | yes |
-| 3 | Without a doubt. | yes |
-| 4 | Yes—definitely. | yes |
-| 5 | You may rely on it. | yes |
-| 6 | As I see it, yes. | yes |
-| 7 | Most likely. | yes |
-| 8 | Outlook good. | yes |
-| 9 | Yes. | yes — `lib/resources.rb` + `data/icons/` |
-| 10 | Signs point to yes. | yes — 196 catalogues under `po/`, compiled to `locale/` |
+| 1 | It is certain. | `success` |
+| 2 | It is decidedly so. | `success` |
+| 3 | Without a doubt. | `success` |
+| 4 | Yes—definitely. | `success` |
+| 5 | You may rely on it. | `success` |
+| 6 | As I see it, yes. | `success` |
+| 7 | Most likely. | `success` |
+| 8 | Outlook good. | `success` |
+| 9 | Yes. | `success` |
+| 10 | Signs point to yes. | `success` |
 | 11 | Yep! | `success` |
 | 12 | Absolutely! | `success` |
 | 13 | You bet! | `success` |
@@ -194,6 +196,13 @@ path; the three SVGs ship under `data/icons/hicolor/` with upstream's names
 (`about-symbolic.svg`, `com.cassidyjames.clairvoyant.svg`,
 `com.cassidyjames.clairvoyant-symbolic.svg`).
 
+The launcher is `data/launcher.desktop.in`, upstream's file with `Exec=`
+pointing at the port's own executable. Upstream's `i18n.merge_file` merges the
+catalogues into it and into the metainfo at install time; the port's install
+phase runs the same merges with `msgfmt --desktop` and `msgfmt --xml`, and
+installs the hicolor icon tree to `share/icons`, so the desktop id the
+metainfo's `<launchable>` names now exists and its `Icon=` key resolves.
+
 ## po/ — translations
 
 `po/LINGUAS` lists **196 locales**; `po/POTFILES.in` covers
@@ -208,7 +217,7 @@ against the `com.cassidyjames.clairvoyant` domain, bound in `lib/intl.rb`.
 
 | | Upstream | `ruby` |
 |---|---:|---:|
-| Component files | 3 Vala (+1 CSS, 1 gresource) | 10 under `lib/` |
+| Component files | 3 Vala (+1 CSS, 1 gresource, 1 desktop entry) | 10 under `lib/` (+1 desktop entry) |
 | Distinct widget types | 8 | 8 |
 | Widget instances (counting repeaters) | ~62 | ~62 |
 | Distinct CSS classes applied | 8 | 8 |
@@ -219,6 +228,7 @@ against the `com.cassidyjames.clairvoyant` domain, bound in `lib/intl.rb`.
 Every user-facing component upstream has a counterpart on `ruby`:
 `lib/application.rb`, `lib/main_window.rb`, `lib/about_dialog.rb`,
 `lib/fortune_label.rb`, `lib/fortunes.rb`, `lib/style.rb`,
-`lib/resources.rb`, `lib/config.rb`, `lib/intl.rb`, `lib/clairvoyant.rb`.
+`lib/resources.rb`, `lib/config.rb`, `lib/intl.rb`, `lib/clairvoyant.rb`, and
+`data/launcher.desktop.in` for the launcher.
 Nothing upstream is unaccounted for and the port carries no extra
 user-facing component.

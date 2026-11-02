@@ -169,6 +169,38 @@
               ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/glib-2.0/schemas
             fi
 
+            # Upstream's data/meson.build installs the launcher, the metainfo
+            # and the icons into the shared data dirs, with the po/ catalogues
+            # merged in by i18n.merge_file. msgfmt performs the same merges:
+            # --desktop translates a desktop entry's Name, GenericName, Comment
+            # and Keywords keys, --xml the <name>, <summary> and <description>
+            # of an AppStream component. Both are named after the component id,
+            # which is read from the metainfo rather than repeated here, and
+            # which is the desktop id the metainfo's <launchable> already names.
+            appId="$(sed -n 's|.*<id>\(.*\)</id>.*|\1|p' data/metainfo.appdata.xml 2>/dev/null | head -1)"
+
+            if [ -n "$appId" ] && [ -f data/launcher.desktop.in ] && [ -d po ]; then
+              install -d $out/share/applications
+              msgfmt --desktop --template=data/launcher.desktop.in -d po \
+                -o "$out/share/applications/$appId.desktop"
+            fi
+
+            if [ -n "$appId" ] && [ -d po ]; then
+              install -d $out/share/metainfo
+              msgfmt --xml --template=data/metainfo.appdata.xml -d po \
+                -o "$out/share/metainfo/$appId.metainfo.xml"
+            fi
+
+            # The icons already sit in the hicolor layout upstream installs
+            # them into, so the tree goes to share/icons whole, where the icon
+            # theme resolves them by name — which is what makes the launcher's
+            # Icon= key and the window's icon_name find them outside the app's
+            # own search path.
+            if [ -d data/icons/hicolor ]; then
+              install -d $out/share/icons
+              cp -r data/icons/hicolor $out/share/icons/
+            fi
+
             # -rbundler/setup puts the bundled gems on the load path, and
             # GI_TYPELIB_PATH keeps GObject-Introspection from re-registering
             # types the cairo gem's C extension has already registered.
