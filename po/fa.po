@@ -1,0 +1,495 @@
+# Persian translations for com.github.cassidyjames.clairvoyant package.
+# Copyright (C) 2019 THE com.github.cassidyjames.clairvoyant'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.cassidyjames.clairvoyant package.
+# آوید <avds@disroot.org>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.cassidyjames.clairvoyant\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-23 21:49-0600\n"
+"PO-Revision-Date: 2025-09-17 23:50+0330\n"
+"Last-Translator: آوید <avds@disroot.org>\n"
+"Language-Team: none\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+#: data/launcher.desktop.in:3 data/metainfo.appdata.xml.in:8
+msgid "Clairvoyant"
+msgstr "روشن‌بین"
+
+#: data/launcher.desktop.in:4
+msgid "Fortune Teller"
+msgstr "پیش‌گو"
+
+#: data/launcher.desktop.in:5 data/metainfo.appdata.xml.in:9
+msgid "Ask questions, get psychic answers"
+msgstr "سوال بپرسید، پاسخ‌های غیبی بگیرید"
+
+#: data/launcher.desktop.in:11
+msgid "magic;eight;ball;8;crystal;🔮;medium;🎱;"
+msgstr "جادو;هشت;گوی;۸;بلور;🔮;پیش‌گو;🎱;"
+
+#: data/metainfo.appdata.xml.in:15 data/metainfo.appdata.xml.in:17
+msgid "Cassidy James Blaede"
+msgstr "Cassidy James Blaede"
+
+#: data/metainfo.appdata.xml.in:21
+msgid ""
+"Does he love you? Should you have pizza for dinner? Is there such thing as a stupid question? "
+"Discover the answers to these questions and more with Clairvoyant, the magic 8-ball inspired "
+"fortune teller."
+msgstr ""
+"آیا او دوستتان دارد؟ آیا باید برای شام پیتزا بخورید؟ آیا چیزی به نام پرسش احمقانه وجود دارد؟ پاسخ "
+"این پرسش‌ها را با روشن‌بین، پیشگوی الهام‌گرفته‌شده از گوی جادویی ۸ کشف کنید."
+
+#: data/metainfo.appdata.xml.in:23
+msgid "Ask a question, then open Clairvoyant for an answer."
+msgstr "سوالی بپرسید، سپس برای پاسخ روشن‌بین را باز کنید."
+
+#: data/metainfo.appdata.xml.in:24
+msgid "Not satisfied? Ask again, then hit \"Ask Again\" to try again."
+msgstr "خشنودتان نکرد؟ دوباره بپرسید، سپس برای تلاش دوباره روی «دوباره بپرس» کلیک کنید."
+
+#: data/metainfo.appdata.xml.in:25
+msgid "Do what you'd like with the answers—just don't shoot the messenger!"
+msgstr "با پاسخ‌ها هر کاری که می‌خواهید بکنید—فقط پیام‌رسان را سرزنش نکنید!"
+
+#: data/metainfo.appdata.xml.in:36 data/metainfo.appdata.xml.in:48
+msgid "A positive answer, “Without a doubt.”"
+msgstr "یک پاسخ مثبت، «بدون گمان.»"
+
+#: data/metainfo.appdata.xml.in:40 data/metainfo.appdata.xml.in:52
+msgid "A neutral answer, “Reply hazy, try again.”"
+msgstr "پاسخ خنثی، «پاسخ گنگ است، دوباره تلاش کنید.»"
+
+#: data/metainfo.appdata.xml.in:44 data/metainfo.appdata.xml.in:56
+msgid "A negative answer, “My reply is no.”"
+msgstr "پاسخ منفی، «پاسخ من خیر است.»"
+
+#: data/metainfo.appdata.xml.in:64
+msgid "GNOME 47 “Denver”"
+msgstr "گنوم ۴۷ «دنور»"
+
+#: data/metainfo.appdata.xml.in:66
+msgid "Fresh new adaptive look powered by GNOME accent colors!"
+msgstr "نمای تطبیقی تازه، قدرت‌گرفته از لهجه‌های رنگی گنوم!"
+
+#: data/metainfo.appdata.xml.in:67
+msgid "Updated with the latest GNOME 47 platform and Adwaita 1.6"
+msgstr "به‌روزشده با آخرین بستر گنوم ۴۷ و آدوایتا ۱.۶"
+
+#: data/metainfo.appdata.xml.in:68
+msgid "Updated Croatian translations thanks to Milo Ivir"
+msgstr "ترجمهٔ‌ به‌روزشدهٔ کرواتی با سپاس از Milo Ivir"
+
+#: data/metainfo.appdata.xml.in:74
+msgid "No foolin'"
+msgstr "بدون مسخره‌بازی"
+
+#: data/metainfo.appdata.xml.in:76
+msgid "Updated brand colors for Flathub and app store clients"
+msgstr "رنگ‌های هویتی به‌روزشده برای فلت‌هاب و کارخواه‌های فروشگاه کاره"
+
+#: data/metainfo.appdata.xml.in:77
+msgid "Updated for GNOME 46 and Adwaita 1.5"
+msgstr "به‌روزشده برای گنوم ۴۶ و آدوایتا ۱.۵"
+
+#: data/metainfo.appdata.xml.in:78
+msgid "Norwegian Bokmål translations thanks to Brage Fuglseth"
+msgstr "ترجمهٔ نروژی بوکمول با سپاس از Brage Fuglseth"
+
+#: data/metainfo.appdata.xml.in:84
+msgid "Added brand colors for Flathub and app store clients"
+msgstr "رنگ‌های هویتی افزوده‌شده برای فلت‌هاب و کارخواه‌های فروشگاه کاره"
+
+#: data/metainfo.appdata.xml.in:89 data/metainfo.appdata.xml.in:107 data/metainfo.appdata.xml.in:127
+msgid "Updated translations"
+msgstr "ترجمه‌های به‌روزشده"
+
+#: data/metainfo.appdata.xml.in:91 data/metainfo.appdata.xml.in:112 data/metainfo.appdata.xml.in:130
+msgid "Updated Russian translations thanks to Sergej A. (@Ser82-png on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ روسی با سپاس از Sergej A. (@Ser82-png در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:97
+msgid "Under-the-hood fixes"
+msgstr "اصلاح‌های زیرساختی"
+
+#: data/metainfo.appdata.xml.in:99
+msgid "More consistent URLs in the About window and metadata"
+msgstr "نشانی‌های یک‌دست‌تر در پنجرهٔ درباره و فراداده"
+
+#: data/metainfo.appdata.xml.in:100
+msgid "Fixed icon by removing subtle texture"
+msgstr "اصلاح نقشک با برداشتن بافت نازک"
+
+#: data/metainfo.appdata.xml.in:101
+msgid "Improvements for GNOME Circle"
+msgstr "بهبودهایی برای حلقهٔ گنوم"
+
+#: data/metainfo.appdata.xml.in:109
+msgid "Brazilian Portuguese translations thanks to Elder Martins (@eldermartins on GitHub)"
+msgstr "ترجمهٔ پرتغالی برزیلی با سپاس از Elder Martins (@eldermartins در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:110
+msgid "Chinese Traditional translations thanks to Oliver Tzeng (@olivertzeng on GitHub)"
+msgstr "ترجمهٔ چینی سنتی با سپاس از Oliver Tzeng (@olivertzeng در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:111
+msgid "Updated Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ اوکراینی با سپاس از Volkov (@Vovkiv در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:113 data/metainfo.appdata.xml.in:139
+msgid "Updated French translations thanks to @rene-coty on GitHub"
+msgstr "ترجمهٔ به‌روزشدهٔ فرانسوی با سپاس از @rene-coty در گیت‌هاب"
+
+#: data/metainfo.appdata.xml.in:114
+msgid "Updated Turkish translations thanks to Sabri Ünal (@sabriunal on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ ترکی با سپاس از Sabri Ünal (@sabriunal در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:115
+msgid ""
+"Updated Brazilian Portuguese translations thanks to Rafael Fontenelle (@rffontenelle on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ پرتغالی برزیل با سپاس از Rafael Fontenelle (@rffontenelle در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:121
+msgid "Deep Purple"
+msgstr "بنفش سیر"
+
+#: data/metainfo.appdata.xml.in:123
+msgid "New look inspired by the deep purples from the icon"
+msgstr "نمای تازهٔ الهام‌گرفته از بنفش سیر نقشک"
+
+#: data/metainfo.appdata.xml.in:124
+msgid "More information in the About window"
+msgstr "اطلاعات بیشتر در پنجرهٔ درباره"
+
+#: data/metainfo.appdata.xml.in:125
+msgid "Updated for GNOME 45 and Adwaita 1.4"
+msgstr "به‌روزرشده برای گنوم ۴۵ و آدوایتا ۱.۴"
+
+#: data/metainfo.appdata.xml.in:129
+msgid "Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)"
+msgstr "ترجمهٔ اوکراینی با سپاس از Volkov (@Vovkiv در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:136
+msgid "Translations and GNOME 44"
+msgstr "ترجمه‌ها و گنوم ۴۴"
+
+#: data/metainfo.appdata.xml.in:138
+msgid "German translations thanks to @FineFindus on GitHub"
+msgstr "ترجمهٔ آلمانی با سپاس از @FineFindus در گیت‌هاب"
+
+#: data/metainfo.appdata.xml.in:140
+msgid "Updated Italian translations thanks to Davide Ferracin (@phaerrax on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ ایتالیایی با سپاس از Davide Ferracin (@phaerrax در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:141
+msgid "Updated Occitan translations thanks to Quentin PAGÈS (@Mejans on GitHub)"
+msgstr "ترجمهٔ به‌روزشدهٔ اکسیتان با سپاس از Quentin PAGÈS (@Mejans در گیت‌هاب)"
+
+#: data/metainfo.appdata.xml.in:142
+msgid "Updated to the latest GNOME runtime"
+msgstr "به‌روزشده به آخرین زمان‌اجرای گنوم"
+
+#: data/metainfo.appdata.xml.in:148
+msgid "Update for GNOME Circle consideration"
+msgstr "به‌روزرسانی برای در سنجش دایرهٔ گنوم"
+
+#: data/metainfo.appdata.xml.in:150
+msgid "Close with Ctrl+Q and Ctrl+W"
+msgstr "بستن با مهار+Q و مهار+W"
+
+#: data/metainfo.appdata.xml.in:151
+msgid "Selectable answer for improved accessibility"
+msgstr "پاسخ گزینش‌پذیر برای دسترسی‌پذیری بهبودیافته"
+
+#: data/metainfo.appdata.xml.in:152
+msgid "Shorter summary for app listing"
+msgstr "چکیدهٔ کوتاه‌تر برای فهرست کاره"
+
+#: data/metainfo.appdata.xml.in:158
+msgid ""
+"Subtly improved icon; it should be more visible in the app grid, dash, and anywhere else with a "
+"dark background"
+msgstr ""
+"نماد به گونه‌ای ظریف بهبودیافته؛ باید در شبکه کاره، دش و هر جای دیگری با زمینهٔ تیره نمایان‌تر باشد"
+
+#: data/metainfo.appdata.xml.in:163
+msgid "Hotfix: fix About window when closing and re-opening it"
+msgstr "اصلاح سریع: اصلاح پنجرهٔ درباره هنگام بستن و باز کردن دوباره"
+
+#: data/metainfo.appdata.xml.in:168
+msgid "More fun for everyone"
+msgstr "سرگرمی بیشتر برای همه"
+
+#: data/metainfo.appdata.xml.in:170
+msgid "Added eight more original replies"
+msgstr "هشت پاسخ مبتکرانه افزوده‌شده بیشتر"
+
+#: data/metainfo.appdata.xml.in:171
+msgid "Added “About” window"
+msgstr "پنجرهٔ «درباره» افزوده‌شده"
+
+#: data/metainfo.appdata.xml.in:172
+msgid "Improvements to developer tools to make translations easier to keep up to date"
+msgstr "بهبود ابزارهای توسعه‌دهنده برای آسان‌تر کردن به‌روز نگه‌داشتن ترجمه‌ها"
+
+#: data/metainfo.appdata.xml.in:173
+msgid "Italian translations thanks to Albano Battistella"
+msgstr "ترجمهٔ ایتالیایی با سپاس از Albano Battistella"
+
+#: data/metainfo.appdata.xml.in:174
+msgid "Updated runtime to GNOME 43"
+msgstr "زمان‌اجرای به‌روزشده به گنوم ۴۳"
+
+#: data/metainfo.appdata.xml.in:180
+msgid "Hotfix: fix a crash on startup from trying to access nonexistent settings"
+msgstr "اصلاح سریع: اصلاح فروپاشی هنگام راه‌اندازی برای تلاش برای دسترسی به تنظیمات ناموجود"
+
+#: data/metainfo.appdata.xml.in:185
+msgid "Hello, GNOME"
+msgstr "سلام، گنوم"
+
+#: data/metainfo.appdata.xml.in:187
+msgid "Whole new UI"
+msgstr "رابط کاربری کاملاً تازه"
+
+#: data/metainfo.appdata.xml.in:188
+msgid "elementary → GNOME styling"
+msgstr "سبک‌پردازی المنتری ← گنوم"
+
+#: data/metainfo.appdata.xml.in:189
+msgid "Technical upgrade to the latest GNOME platform including GTK4 and LibAdwaita"
+msgstr "ارتقای فنی به آخرین بستر گنوم شامل جتک۴ و لیب‌آدوایتا"
+
+#: data/metainfo.appdata.xml.in:195
+msgid "Hello, Odin"
+msgstr "سلام، اودین"
+
+#: data/metainfo.appdata.xml.in:197
+msgid "Updated for OS 6 and Flatpak"
+msgstr "به‌روزشده برای سامانه‌عامل ۶ و فلت‌پک"
+
+#: data/metainfo.appdata.xml.in:198
+msgid "Turkish translations thanks to Safak GENISOL"
+msgstr "ترجمهٔ ترکی با سپاس از Safak GENISOL"
+
+#: data/metainfo.appdata.xml.in:199
+msgid "Portuguese translations thanks to André Barata"
+msgstr "ترجمهٔ پرتغالی با سپاس از André Barata"
+
+#: data/metainfo.appdata.xml.in:200
+msgid "Spanish translations thanks to @kevincos5"
+msgstr "ترجمهٔ اسپانیایی با سپاس از @kevincos5"
+
+#: data/metainfo.appdata.xml.in:206
+msgid "Refreshed icons thanks to Micah Ilbery"
+msgstr "نقشک‌های تازه‌شده با سپاس از Micah Ilbery"
+
+#: data/metainfo.appdata.xml.in:211
+msgid "Polish translations thanks to Michał Nowakowski"
+msgstr "ترجمهٔ لهستانی با سپاس از Michał Nowakowski"
+
+#: data/metainfo.appdata.xml.in:216
+msgid "Dutch translations thanks to Heimen Stoffels"
+msgstr "ترجمهٔ هلندی با سپاس از Heimen Stoffels"
+
+#: data/metainfo.appdata.xml.in:221
+msgid "French translations thanks to @NathanBnm"
+msgstr "ترجمهٔ فرانسوی با سپاس از @NathanBnm"
+
+#: data/metainfo.appdata.xml.in:226
+msgid "Clairvoyant is now translatable."
+msgstr "روشن‌بین هم‌اکنون ترجمه‌پذیر است."
+
+#: data/metainfo.appdata.xml.in:231
+msgid "Happy new year! This release contains AppData fixes."
+msgstr "سال نو مبارک! این انتشار دربرگیرندهٔ اصلاحات کاره‌داده است."
+
+#: data/metainfo.appdata.xml.in:236
+msgid "Fix 48px icon"
+msgstr "اصلاح نقشک ۴۸ پیکسلی"
+
+#: data/metainfo.appdata.xml.in:241
+msgid "Post-release update"
+msgstr "به‌روزرسانی پس‌ازانتشار"
+
+#: data/metainfo.appdata.xml.in:243
+msgid "Clean up AppStream data"
+msgstr "تمیزکاری داده‌های جریان کاره"
+
+#: data/metainfo.appdata.xml.in:244
+msgid "Expand on the description"
+msgstr "گسترش توضیحات"
+
+#: data/metainfo.appdata.xml.in:245
+msgid "Change price to $1"
+msgstr "تغییر هزینه به ۱ دلار"
+
+#. /TRANSLATORS: Positive response
+#: data/metainfo.appdata.xml.in:251 src/FortuneLabel.vala:22
+msgid "It is decidedly so."
+msgstr "مقرر شده است."
+
+#: data/metainfo.appdata.xml.in:253
+msgid "Initial release"
+msgstr "انتشار نخست"
+
+#. /TRANSLATORS: Positive response, the thing is certain to happen
+#: src/FortuneLabel.vala:17
+msgid "It is certain."
+msgstr "مسلم است."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:27
+msgid "Without a doubt."
+msgstr "بدون گمان."
+
+#. /TRANSLATORS: Positive response, the thing is certain to happen
+#: src/FortuneLabel.vala:32
+msgid "Yes—definitely."
+msgstr "بله—قطعاً."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:37
+msgid "You may rely on it."
+msgstr "می‌توانید روی آن حساب کنید."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:42
+msgid "As I see it, yes."
+msgstr "از دید من، بله."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:47
+msgid "Most likely."
+msgstr "به احتمال بالا."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:52
+msgid "Outlook good."
+msgstr "چشم‌انداز دل‌پذیر است."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:57
+msgid "Yes."
+msgstr "بله."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:62
+msgid "Signs point to yes."
+msgstr "نشانه‌ها می‌گویند بله."
+
+#. /TRANSLATORS: Positive response, casual
+#: src/FortuneLabel.vala:67
+msgid "Yep!"
+msgstr "آره!"
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:72
+msgid "Absolutely!"
+msgstr "بی‌چون‌وچرا!"
+
+#. /TRANSLATORS: Positive response, casual
+#: src/FortuneLabel.vala:77
+msgid "You bet!"
+msgstr "تردید نکنید!"
+
+#: src/FortuneLabel.vala:81
+msgid "Confirmed."
+msgstr "تأیید شد."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:86
+msgid "Don't count on it."
+msgstr "روی آن حساب نکنید."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:91
+msgid "My reply is no."
+msgstr "پاسخ من خیر است."
+
+#. /TRANSLATORS: Negative response, referring to the 8-ball's "sources"
+#: src/FortuneLabel.vala:96
+msgid "My sources say no."
+msgstr "منابع من می‌گویند خیر."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:101
+msgid "Outlook not so good."
+msgstr "چشم‌انداز چندان دل‌پذیر نیست."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:106
+msgid "Very doubtful."
+msgstr "بسیار بدگمان."
+
+#. /TRANSLATORS: Negative response, casual
+#: src/FortuneLabel.vala:111
+msgid "Naw."
+msgstr "نه."
+
+#. /TRANSLATORS: Negative response; reference to the recurring Star Wars line
+#: src/FortuneLabel.vala:116
+msgid "I’ve got a bad feeling about this…"
+msgstr "حس بدی بهش دارم…"
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:121
+msgid "Reply hazy, try again."
+msgstr "پاسخ روشن نیست، دوباره تلاش کنید."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:126
+msgid "Ask again later."
+msgstr "بعداً دوباره بپرسید."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:131
+msgid "Better not tell you now."
+msgstr "بهتر است اکنون به شما نگویم."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:136
+msgid "Cannot predict now."
+msgstr "اکنون نمی‌توانم پیش‌بینی کنم."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:141
+msgid "Concentrate and ask again."
+msgstr "تمرکز کنید و دوباره بپرسید."
+
+#. /TRANSLATORS: Neutral response; reference to a line from Yoda from Star Wars
+#: src/FortuneLabel.vala:146
+msgid "Impossible to see, the future is."
+msgstr "غیرممکنه، دیدن آینده."
+
+#. /TRANSLATORS: Neutral response; a play on the "404 Page Not Found" web browser error code
+#: src/FortuneLabel.vala:151
+msgid "404 Answer Not Found"
+msgstr "۴۰۴ پاسخ یافت نشد"
+
+#: src/MainWindow.vala:19
+msgid "About"
+msgstr "درباره"
+
+#. / The translator credits. Please translate this with your name(s).
+#: src/MainWindow.vala:30
+msgid "translator-credits"
+msgstr "آوید <avds@disroot.org>"
+
+#: src/MainWindow.vala:52
+msgid "Ask Again"
+msgstr "دوباره بپرسید"
+
+#: src/MainWindow.vala:59
+msgid "Unsupported version of this app"
+msgstr "نگارش پشتیبانی‌نشدهٔ این کاره"
+
+#: src/MainWindow.vala:60
+msgid "_Learn More…"
+msgstr "_بیشتر بدانید…"

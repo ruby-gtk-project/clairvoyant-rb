@@ -128,7 +128,10 @@
           # computed its wrapper arguments, so a schema would end up somewhere
           # the wrapper never looks. The wrapper below is built by hand and
           # points at both the pre- and post-move paths.
-          nativeBuildInputs = [ pkgs.makeWrapper ];
+          # gettext is build-time only: msgfmt compiles the catalogues below and
+          # checks each translation's format specifiers against its msgid, the
+          # check the gettext gem's own rmsgfmt does not do.
+          nativeBuildInputs = [ pkgs.makeWrapper pkgs.gettext ];
           buildInputs = [ gems ] ++ gtkStack;
 
           dontBuild = true;
@@ -144,6 +147,20 @@
             # exe/ sits next to lib/ so the launcher's `require "clairvoyant"`
             # resolves against the copied tree.
             install -Dm755 exe/${launcher} $out/share/clairvoyant/exe/${launcher}
+
+            # Compile the port's gettext catalogues to where lib/config.rb's
+            # LOCALE_DIR looks: share/clairvoyant/locale/<lang>/LC_MESSAGES.
+            # The domain is the file name, and it is upstream's, so upstream's
+            # own po/ applies unchanged.
+            if [ -d po ]; then
+              for po in po/*.po; do
+                lang="$(basename "$po" .po)"
+                install -d "$out/share/clairvoyant/locale/$lang/LC_MESSAGES"
+                msgfmt -c --check-format \
+                  -o "$out/share/clairvoyant/locale/$lang/LC_MESSAGES/com.cassidyjames.clairvoyant.mo" \
+                  "$po"
+              done
+            fi
 
             # Compile any GSettings schema the port ships.
             if [ -d data/schemas ]; then

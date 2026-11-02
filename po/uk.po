@@ -1,0 +1,559 @@
+# Ukrainian translations for com.github.cassidyjames.clairvoyant package.
+# Copyright (C) 2023 THE com.github.cassidyjames.clairvoyant'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.cassidyjames.clairvoyant package.
+# volkov <volkovissocool@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.cassidyjames.clairvoyant\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-23 21:49-0600\n"
+"PO-Revision-Date: 2023-09-27 09:25+0300\n"
+"Last-Translator: volkov <volkovissocool@gmail.com>\n"
+"Language-Team: none\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#: data/launcher.desktop.in:3 data/metainfo.appdata.xml.in:8
+msgid "Clairvoyant"
+msgstr "Ясновидець"
+
+#: data/launcher.desktop.in:4
+msgid "Fortune Teller"
+msgstr "Ворожка"
+
+#: data/launcher.desktop.in:5 data/metainfo.appdata.xml.in:9
+msgid "Ask questions, get psychic answers"
+msgstr "Ставте запитання - отримуйте психічні відповіді"
+
+#: data/launcher.desktop.in:11
+msgid "magic;eight;ball;8;crystal;🔮;medium;🎱;"
+msgstr ""
+"magic;eight;ball;8;crystal;🔮;medium;🎱;магія;вісім;шар;куля;кристал;гадалка;"
+"ворожка;доля;"
+
+#: data/metainfo.appdata.xml.in:15 data/metainfo.appdata.xml.in:17
+msgid "Cassidy James Blaede"
+msgstr "Cassidy James Blaede"
+
+#: data/metainfo.appdata.xml.in:21
+msgid ""
+"Does he love you? Should you have pizza for dinner? Is there such thing as a "
+"stupid question? Discover the answers to these questions and more with "
+"Clairvoyant, the magic 8-ball inspired fortune teller."
+msgstr ""
+"Чи кохає він вас? Чи варто замовити піцу на вечерю? Чи існують дурні "
+"запитання? На ці та інші питання ви можете отримати відповідь у Ясновидця, "
+"додатку заснованого на іграшці-ясновидці \"Magic 8 ball\"."
+
+#: data/metainfo.appdata.xml.in:23
+msgid "Ask a question, then open Clairvoyant for an answer."
+msgstr "Поставте питання і тоді відкрийте Ясновидець, щоб отримати відповідь."
+
+#: data/metainfo.appdata.xml.in:24
+msgid "Not satisfied? Ask again, then hit \"Ask Again\" to try again."
+msgstr ""
+"Не задоволені? Спитайте ще раз і натисніть \"Спитати ще раз\", щоб "
+"спробувати ще раз."
+
+#: data/metainfo.appdata.xml.in:25
+msgid "Do what you'd like with the answers—just don't shoot the messenger!"
+msgstr ""
+"Робить з цими відповідями що бажаєте - головне не пристрельте відправника!"
+
+#: data/metainfo.appdata.xml.in:36 data/metainfo.appdata.xml.in:48
+#, fuzzy
+msgid "A positive answer, “Without a doubt.”"
+msgstr "(Позитивна відповідь) \"Ви можете покластися на це.\""
+
+#: data/metainfo.appdata.xml.in:40 data/metainfo.appdata.xml.in:52
+#, fuzzy
+msgid "A neutral answer, “Reply hazy, try again.”"
+msgstr "Відповідь як в тумані... спробуйте ще раз."
+
+#: data/metainfo.appdata.xml.in:44 data/metainfo.appdata.xml.in:56
+#, fuzzy
+msgid "A negative answer, “My reply is no.”"
+msgstr "(Негативна відповідь) \"Не дуже хороша перспектива.\""
+
+#: data/metainfo.appdata.xml.in:64
+msgid "GNOME 47 “Denver”"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:66
+msgid "Fresh new adaptive look powered by GNOME accent colors!"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:67
+#, fuzzy
+msgid "Updated with the latest GNOME 47 platform and Adwaita 1.6"
+msgstr "Оновлено для GNOME версії 45 і бібліотеки Adwaita 1.4"
+
+#: data/metainfo.appdata.xml.in:68
+#, fuzzy
+msgid "Updated Croatian translations thanks to Milo Ivir"
+msgstr "Оновлено український переклад дякуючи Volkov (@Vovkiv у GitHub)"
+
+#: data/metainfo.appdata.xml.in:74
+msgid "No foolin'"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:76
+msgid "Updated brand colors for Flathub and app store clients"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:77
+#, fuzzy
+msgid "Updated for GNOME 46 and Adwaita 1.5"
+msgstr "Оновлено для GNOME версії 45 і бібліотеки Adwaita 1.4"
+
+#: data/metainfo.appdata.xml.in:78
+#, fuzzy
+msgid "Norwegian Bokmål translations thanks to Brage Fuglseth"
+msgstr "Французький переклад додано дякуючи @NathanBnm"
+
+#: data/metainfo.appdata.xml.in:84
+msgid "Added brand colors for Flathub and app store clients"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:89 data/metainfo.appdata.xml.in:107
+#: data/metainfo.appdata.xml.in:127
+msgid "Updated translations"
+msgstr "Оновлено переклади"
+
+#: data/metainfo.appdata.xml.in:91 data/metainfo.appdata.xml.in:112
+#: data/metainfo.appdata.xml.in:130
+msgid "Updated Russian translations thanks to Sergej A. (@Ser82-png on GitHub)"
+msgstr "Оновлено російський переклад дякуючи Sergej A. (@Ser82-png у GitHub)"
+
+#: data/metainfo.appdata.xml.in:97
+msgid "Under-the-hood fixes"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:99
+#, fuzzy
+msgid "More consistent URLs in the About window and metadata"
+msgstr "Більше інформації в вікні \"Про додаток\""
+
+#: data/metainfo.appdata.xml.in:100
+msgid "Fixed icon by removing subtle texture"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:101
+msgid "Improvements for GNOME Circle"
+msgstr ""
+
+#: data/metainfo.appdata.xml.in:109
+#, fuzzy
+msgid ""
+"Brazilian Portuguese translations thanks to Elder Martins (@eldermartins on "
+"GitHub)"
+msgstr ""
+"Оновлено італійський переклад дякуючи Davide Ferracin (@phaerrax у GitHub)"
+
+#: data/metainfo.appdata.xml.in:110
+#, fuzzy
+msgid ""
+"Chinese Traditional translations thanks to Oliver Tzeng (@olivertzeng on "
+"GitHub)"
+msgstr "Український переклад дякуючи Volkov (@Vovkiv у GitHub)"
+
+#: data/metainfo.appdata.xml.in:111
+msgid "Updated Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)"
+msgstr "Оновлено український переклад дякуючи Volkov (@Vovkiv у GitHub)"
+
+#: data/metainfo.appdata.xml.in:113 data/metainfo.appdata.xml.in:139
+msgid "Updated French translations thanks to @rene-coty on GitHub"
+msgstr "Оновлено французький переклад дякуючи @rene-coty у GitHub"
+
+#: data/metainfo.appdata.xml.in:114
+#, fuzzy
+msgid ""
+"Updated Turkish translations thanks to Sabri Ünal (@sabriunal on GitHub)"
+msgstr "Оновлено російський переклад дякуючи Sergej A. (@Ser82-png у GitHub)"
+
+#: data/metainfo.appdata.xml.in:115
+#, fuzzy
+msgid ""
+"Updated Brazilian Portuguese translations thanks to Rafael Fontenelle "
+"(@rffontenelle on GitHub)"
+msgstr "Оновлено український переклад дякуючи Volkov (@Vovkiv у GitHub)"
+
+#: data/metainfo.appdata.xml.in:121
+msgid "Deep Purple"
+msgstr "Deep Purple"
+
+#: data/metainfo.appdata.xml.in:123
+msgid "New look inspired by the deep purples from the icon"
+msgstr "Новий візуальний дизайн"
+
+#: data/metainfo.appdata.xml.in:124
+msgid "More information in the About window"
+msgstr "Більше інформації в вікні \"Про додаток\""
+
+#: data/metainfo.appdata.xml.in:125
+msgid "Updated for GNOME 45 and Adwaita 1.4"
+msgstr "Оновлено для GNOME версії 45 і бібліотеки Adwaita 1.4"
+
+#: data/metainfo.appdata.xml.in:129
+msgid "Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)"
+msgstr "Український переклад дякуючи Volkov (@Vovkiv у GitHub)"
+
+#: data/metainfo.appdata.xml.in:136
+msgid "Translations and GNOME 44"
+msgstr "Переклади і GNOME версії 44"
+
+#: data/metainfo.appdata.xml.in:138
+msgid "German translations thanks to @FineFindus on GitHub"
+msgstr "Оновлено німецький переклад дякуючи @FineFindus у GitHub"
+
+#: data/metainfo.appdata.xml.in:140
+msgid ""
+"Updated Italian translations thanks to Davide Ferracin (@phaerrax on GitHub)"
+msgstr ""
+"Оновлено італійський переклад дякуючи Davide Ferracin (@phaerrax у GitHub)"
+
+#: data/metainfo.appdata.xml.in:141
+msgid ""
+"Updated Occitan translations thanks to Quentin PAGÈS (@Mejans on GitHub)"
+msgstr ""
+"Оновлено окситанський переклад дякуючи Quentin PAGÈS (@Mejans у GitHub)"
+
+#: data/metainfo.appdata.xml.in:142
+msgid "Updated to the latest GNOME runtime"
+msgstr "Оновлено до останнього рантайму GNOME"
+
+#: data/metainfo.appdata.xml.in:148
+msgid "Update for GNOME Circle consideration"
+msgstr "Оновлено, щоб потрапити в Супутні програми GNOME"
+
+#: data/metainfo.appdata.xml.in:150
+msgid "Close with Ctrl+Q and Ctrl+W"
+msgstr "Тепер можна закривати додаток через Ctrl+Q та Ctrl+W"
+
+#: data/metainfo.appdata.xml.in:151
+msgid "Selectable answer for improved accessibility"
+msgstr "Тепер відповіді можна обирати для покращення доступності"
+
+#: data/metainfo.appdata.xml.in:152
+msgid "Shorter summary for app listing"
+msgstr "Скорочено опис для списку додатків"
+
+#: data/metainfo.appdata.xml.in:158
+msgid ""
+"Subtly improved icon; it should be more visible in the app grid, dash, and "
+"anywhere else with a dark background"
+msgstr ""
+"Трошки покращено піктограму; тепер вона буде більш помітна у сітці додатків, "
+"панель програм і взагалі будь-де, де є темне тло"
+
+#: data/metainfo.appdata.xml.in:163
+msgid "Hotfix: fix About window when closing and re-opening it"
+msgstr ""
+"Хотфікс: виправлено вікно \"Про програму\", коли його відкривають та "
+"закривають"
+
+#: data/metainfo.appdata.xml.in:168
+msgid "More fun for everyone"
+msgstr "Більше веселощів для усіх"
+
+#: data/metainfo.appdata.xml.in:170
+msgid "Added eight more original replies"
+msgstr "Додано ще 8 оригінальних реплік"
+
+#: data/metainfo.appdata.xml.in:171
+msgid "Added “About” window"
+msgstr "Додано вікно \"Про додаток\""
+
+#: data/metainfo.appdata.xml.in:172
+msgid ""
+"Improvements to developer tools to make translations easier to keep up to "
+"date"
+msgstr ""
+"Покращення для інструментарію розробників для полегшення процесу перекладу "
+"додатку"
+
+#: data/metainfo.appdata.xml.in:173
+msgid "Italian translations thanks to Albano Battistella"
+msgstr "Італійський переклад дякуючи Albano Battistella"
+
+#: data/metainfo.appdata.xml.in:174
+msgid "Updated runtime to GNOME 43"
+msgstr "Рантайм оновлено до GNOME версії 43"
+
+#: data/metainfo.appdata.xml.in:180
+msgid ""
+"Hotfix: fix a crash on startup from trying to access nonexistent settings"
+msgstr ""
+"Хотфікс: виправлено краш додатку на запуску, при спробі отримати доступ до "
+"не існуючих налаштувань"
+
+#: data/metainfo.appdata.xml.in:185
+msgid "Hello, GNOME"
+msgstr "Привіт, GNOME"
+
+#: data/metainfo.appdata.xml.in:187
+msgid "Whole new UI"
+msgstr "Новий інтерфейс"
+
+#: data/metainfo.appdata.xml.in:188
+msgid "elementary → GNOME styling"
+msgstr "elementary → GNOME стилізація"
+
+#: data/metainfo.appdata.xml.in:189
+msgid ""
+"Technical upgrade to the latest GNOME platform including GTK4 and LibAdwaita"
+msgstr ""
+"Технічне оновлення для останньої версії GNOME платформи, включаючи GTK4 і "
+"LibAdwaita"
+
+#: data/metainfo.appdata.xml.in:195
+msgid "Hello, Odin"
+msgstr "Привіт, Odin"
+
+#: data/metainfo.appdata.xml.in:197
+msgid "Updated for OS 6 and Flatpak"
+msgstr "Оновлено для OS 6 і Flatpak"
+
+#: data/metainfo.appdata.xml.in:198
+msgid "Turkish translations thanks to Safak GENISOL"
+msgstr "Турецький переклад додано дякуючи Safak GENISOL"
+
+#: data/metainfo.appdata.xml.in:199
+msgid "Portuguese translations thanks to André Barata"
+msgstr "Португальський переклад додано дякуючи André Barata"
+
+#: data/metainfo.appdata.xml.in:200
+msgid "Spanish translations thanks to @kevincos5"
+msgstr "Іспанський переклад додано дякуючи @kevincos5"
+
+#: data/metainfo.appdata.xml.in:206
+msgid "Refreshed icons thanks to Micah Ilbery"
+msgstr "Оновлено піктограми дякуючи Micah Ilbery"
+
+#: data/metainfo.appdata.xml.in:211
+msgid "Polish translations thanks to Michał Nowakowski"
+msgstr "Польський переклад додано дякуючи Michał Nowakowski"
+
+#: data/metainfo.appdata.xml.in:216
+msgid "Dutch translations thanks to Heimen Stoffels"
+msgstr "Голландський переклад додано дякуючи Heimen Stoffels"
+
+#: data/metainfo.appdata.xml.in:221
+msgid "French translations thanks to @NathanBnm"
+msgstr "Французький переклад додано дякуючи @NathanBnm"
+
+#: data/metainfo.appdata.xml.in:226
+msgid "Clairvoyant is now translatable."
+msgstr "Тепер Ясновидець може бути перекладеним на різні мови."
+
+#: data/metainfo.appdata.xml.in:231
+msgid "Happy new year! This release contains AppData fixes."
+msgstr "Щасливого Нового Року! У цьому релізу було виправлено AppData."
+
+#: data/metainfo.appdata.xml.in:236
+msgid "Fix 48px icon"
+msgstr "Виправлено 48п піктограму"
+
+#: data/metainfo.appdata.xml.in:241
+msgid "Post-release update"
+msgstr "Оновлення після релізу"
+
+#: data/metainfo.appdata.xml.in:243
+msgid "Clean up AppStream data"
+msgstr "Підчищено AppStream дані"
+
+#: data/metainfo.appdata.xml.in:244
+msgid "Expand on the description"
+msgstr "Розширено опис"
+
+#: data/metainfo.appdata.xml.in:245
+msgid "Change price to $1"
+msgstr "Змінено цінник на 1$"
+
+#. /TRANSLATORS: Positive response
+#: data/metainfo.appdata.xml.in:251 src/FortuneLabel.vala:22
+msgid "It is decidedly so."
+msgstr "Однозначно так."
+
+#: data/metainfo.appdata.xml.in:253
+msgid "Initial release"
+msgstr "Перший реліз"
+
+#. /TRANSLATORS: Positive response, the thing is certain to happen
+#: src/FortuneLabel.vala:17
+msgid "It is certain."
+msgstr "Можливо."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:27
+msgid "Without a doubt."
+msgstr "Без сумніву."
+
+#. /TRANSLATORS: Positive response, the thing is certain to happen
+#: src/FortuneLabel.vala:32
+msgid "Yes—definitely."
+msgstr "Так - абсолютно точно."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:37
+msgid "You may rely on it."
+msgstr "Ви можете покластися на це."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:42
+msgid "As I see it, yes."
+msgstr "Я бачу це - так."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:47
+msgid "Most likely."
+msgstr "Ймовірно."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:52
+msgid "Outlook good."
+msgstr "Непогані перспективи."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:57
+msgid "Yes."
+msgstr "Так."
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:62
+msgid "Signs point to yes."
+msgstr "Знаки вказують на так."
+
+#. /TRANSLATORS: Positive response, casual
+#: src/FortuneLabel.vala:67
+msgid "Yep!"
+msgstr "Ага!"
+
+#. /TRANSLATORS: Positive response
+#: src/FortuneLabel.vala:72
+msgid "Absolutely!"
+msgstr "Абсолютно!"
+
+#. /TRANSLATORS: Positive response, casual
+#: src/FortuneLabel.vala:77
+msgid "You bet!"
+msgstr "Будьте впевнені!"
+
+#: src/FortuneLabel.vala:81
+msgid "Confirmed."
+msgstr "Підтверджую."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:86
+msgid "Don’t count on it."
+msgstr "Не розраховуйте на це."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:91
+msgid "My reply is no."
+msgstr "Моя відповідь - ні."
+
+#. /TRANSLATORS: Negative response, referring to the 8-ball's "sources"
+#: src/FortuneLabel.vala:96
+msgid "My sources say no."
+msgstr "Мої джерела кажуть що - ні."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:101
+msgid "Outlook not so good."
+msgstr "Не дуже хороша перспектива."
+
+#. /TRANSLATORS: Negative response
+#: src/FortuneLabel.vala:106
+msgid "Very doubtful."
+msgstr "Сумніваюся."
+
+#. /TRANSLATORS: Negative response, casual
+#: src/FortuneLabel.vala:111
+msgid "Naw."
+msgstr "Нє."
+
+#. /TRANSLATORS: Negative response; reference to the recurring Star Wars line
+#: src/FortuneLabel.vala:116
+msgid "I’ve got a bad feeling about this…"
+msgstr "У мене погане передчуття з цього приводу…"
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:121
+msgid "Reply hazy, try again."
+msgstr "Відповідь як в тумані... спробуйте ще раз."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:126
+msgid "Ask again later."
+msgstr "Спитайте ще раз пізніше."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:131
+msgid "Better not tell you now."
+msgstr "Краще не буду казати вам."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:136
+msgid "Cannot predict now."
+msgstr "Не можу передбачити зараз."
+
+#. /TRANSLATORS: Neutral response
+#: src/FortuneLabel.vala:141
+msgid "Concentrate and ask again."
+msgstr "Сконцентруйтесь та запитайте ще раз."
+
+#. /TRANSLATORS: Neutral response; reference to a line from Yoda from Star Wars
+#: src/FortuneLabel.vala:146
+msgid "Impossible to see, the future is."
+msgstr "Неможливо побачити, майбутнє це."
+
+#. /TRANSLATORS: Neutral response; a play on the "404 Page Not Found" web browser error code
+#: src/FortuneLabel.vala:151
+msgid "404 Answer Not Found"
+msgstr "Помилка 404 - відповідь не знайдена"
+
+#: src/MainWindow.vala:19
+msgid "About"
+msgstr "Про додаток"
+
+#. / The translator credits. Please translate this with your name(s).
+#: src/MainWindow.vala:30
+msgid "translator-credits"
+msgstr "volkov <volkovissocool@gmail.com>"
+
+#: src/MainWindow.vala:52
+msgid "Ask Again"
+msgstr "Спитати ще раз"
+
+#: src/MainWindow.vala:59
+msgid "Unsupported version of this app"
+msgstr ""
+
+#: src/MainWindow.vala:60
+msgid "_Learn More…"
+msgstr ""
+
+#~ msgid "A positive answer, \"Signs point to yes.\""
+#~ msgstr "(Позитивна відповідь) \"Знаки вказують на так.\""
+
+#~ msgid "A neutral answer, \"Cannot predict now.\""
+#~ msgstr "(Нейтральна відповідь) \"Не можу передбачити зараз.\""
+
+#~ msgid "A neutral answer, \"Better not tell you now.\""
+#~ msgstr "(Нейтральна відповідь) \"Краще не буду казати вам.\""
+
+#~ msgid "A negative answer, \"Naw.\""
+#~ msgstr "(Негативна відповідь) \"Нє.\""
+
+#~ msgid "Ask questions and get psychic answers"
+#~ msgstr "Ставте запитання та отримуйте психічні відповіді"
+
+#~ msgid "Maintenance Release"
+#~ msgstr "Реліз сфокусований на обслуговуванні"

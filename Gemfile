@@ -62,6 +62,9 @@ gem "irb", "~> 1.17" # ruby >= 2.7
 gem "gem_kit"
 gem "gtk4"
 
+# The app's own translations: pure-Ruby gettext, bound in lib/intl.rb.
+gem "gettext"
+
 group :development do
   gem "rubocop"
 end

@@ -1,0 +1,4 @@
+data/metainfo.appdata.xml
+lib/about_dialog.rb
+lib/fortunes.rb
+lib/main_window.rb

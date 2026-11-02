@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018-2025–2024 Cassidy James Blaede <c@ssidyjam.es> -->
+<component type="desktop">
+  <id>com.cassidyjames.clairvoyant</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Clairvoyant</name>
+  <summary>Ask questions, get psychic answers</summary>
+  <branding>
+    <color type="primary" scheme_preference="light">#deddda</color>
+    <color type="primary" scheme_preference="dark">#3d3846</color>
+  </branding>
+
+  <developer_name translatable="no">Cassidy James Blaede</developer_name>
+  <developer id="com.cassidyjames">
+    <name translatable="no">Cassidy James Blaede</name>
+  </developer>
+
+  <description>
+    <p>Does he love you? Should you have pizza for dinner? Is there such thing as a stupid question? Discover the answers to these questions and more with Clairvoyant, the magic 8-ball inspired fortune teller.</p>
+    <ul>
+      <li>Ask a question, then open Clairvoyant for an answer.</li>
+      <li>Not satisfied? Ask again, then hit "Ask Again" to try again.</li>
+      <li>Do what you'd like with the answers—just don't shoot the messenger!</li>
+    </ul>
+    <p>Warning: it has been noted that “such a program can lead people away from God, as they are making an idol of an application and putting their faith into a virtual 8 ball.” Proceed at your own risk!</p>
+  </description>
+
+  <provides>
+    <binary>com.cassidyjames.clairvoyant</binary>
+    <id>com.github.cassidyjames.clairvoyant</id>
+  </provides>
+  <replaces>
+    <id>com.github.cassidyjames.clairvoyant</id>
+  </replaces>
+  <launchable type="desktop-id">com.cassidyjames.clairvoyant.desktop</launchable>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>A positive answer, “Without a doubt.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/yes.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A neutral answer, “Reply hazy, try again.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/maybe.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A negative answer, “My reply is no.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/no.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A positive answer, “Without a doubt.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/yes-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A neutral answer, “Reply hazy, try again.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/maybe-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A negative answer, “My reply is no.”</caption>
+      <image>https://raw.githubusercontent.com/cassidyjames/clairvoyant/3.1.8/data/screenshots/no-dark.png</image>
+    </screenshot>
+  </screenshots>
+
+  <releases>
+    <release version="3.1.12" date="2025-11-01">
+      <description>
+        <p>Ubuntu Summit 25.10</p>
+        <ul>
+          <li>Removed sandbox detection for Soumya</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.11" date="2025-10-30">
+      <description>
+        <p>GNOME 49 “Brescia”</p>
+        <ul>
+          <li>Updated with the latest GNOME 49 platform and Adwaita 1.8</li>
+          <li>Added Arabic translations thanks to Ahmed Najmawi</li>
+          <li>Added Persian translations thanks to آوید (@avds2 on GitHub)</li>
+          <li>Updated Croatian translations thanks to Milo Ivir (@milotype on GitHub)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.10" date="2025-02-24">
+      <description>
+        <p>Updated translations</p>
+        <ul>
+          <li>Improved Spanish translations thanks to LucidTyper</li>
+          <li>Added Danish translations thanks to Kasper Agentoft Lind</li>
+          <li>Added Bulgarian translations thanks to twlvnn kraftwerk</li>
+          <li>Improved Brazilian Portuguese translations thanks to aquila0101</li>
+          <li>Updated app ID to new RDNN based on cassidyjames.com</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.8" date="2024-09-23">
+      <description>
+        <p>GNOME 47 “Denver”</p>
+        <ul>
+          <li>Fresh new adaptive look powered by GNOME accent colors!</li>
+          <li>Updated with the latest GNOME 47 platform and Adwaita 1.6</li>
+          <li>Updated Croatian translations thanks to Milo Ivir</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.7" date="2024-04-01">
+      <description>
+        <p>No foolin'</p>
+        <ul>
+          <li>Updated brand colors for Flathub and app store clients</li>
+          <li>Updated for GNOME 46 and Adwaita 1.5</li>
+          <li>Norwegian Bokmål translations thanks to Brage Fuglseth</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.6" date="2024-03-01">
+      <description>
+        <p>Added brand colors for Flathub and app store clients</p>
+      </description>
+    </release>
+    <release version="3.1.5" date="2024-02-27">
+      <description>
+        <p>Updated translations</p>
+        <ul>
+          <li>Updated Russian translations thanks to Sergej A. (@Ser82-png on GitHub)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.4" date="2024-02-26">
+      <description>
+        <p>Under-the-hood fixes</p>
+        <ul>
+          <li>More consistent URLs in the About window and metadata</li>
+          <li>Fixed icon by removing subtle texture</li>
+          <li>Improvements for GNOME Circle</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.3" date="2024-01-30">
+      <description>
+        <p>Updated translations</p>
+        <ul>
+          <li>Brazilian Portuguese translations thanks to Elder Martins (@eldermartins on GitHub)</li>
+          <li>Chinese Traditional translations thanks to Oliver Tzeng (@olivertzeng on GitHub)</li>
+          <li>Updated Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)</li>
+          <li>Updated Russian translations thanks to Sergej A. (@Ser82-png on GitHub)</li>
+          <li>Updated French translations thanks to @rene-coty on GitHub</li>
+          <li>Updated Turkish translations thanks to Sabri Ünal (@sabriunal on GitHub)</li>
+          <li>Updated Brazilian Portuguese translations thanks to Rafael Fontenelle (@rffontenelle on GitHub)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.2" date="2023-09-25">
+      <description>
+        <p>Deep Purple</p>
+        <ul>
+          <li>New look inspired by the deep purples from the icon</li>
+          <li>More information in the About window</li>
+          <li>Updated for GNOME 45 and Adwaita 1.4</li>
+        </ul>
+        <p>Updated translations</p>
+        <ul>
+          <li>Ukrainian translations thanks to Volkov (@Vovkiv on GitHub)</li>
+          <li>Updated Russian translations thanks to Sergej A. (@Ser82-png on GitHub)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.6" date="2023-04-03">
+      <description>
+        <p>Translations and GNOME 44</p>
+        <ul>
+          <li>German translations thanks to @FineFindus on GitHub</li>
+          <li>Updated French translations thanks to @rene-coty on GitHub</li>
+          <li>Updated Italian translations thanks to Davide Ferracin (@phaerrax on GitHub)</li>
+          <li>Updated Occitan translations thanks to Quentin PAGÈS (@Mejans on GitHub)</li>
+          <li>Updated to the latest GNOME runtime</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.5" date="2023-03-15">
+      <description>
+        <p>Update for GNOME Circle consideration</p>
+        <ul>
+          <li>Close with Ctrl+Q and Ctrl+W</li>
+          <li>Selectable answer for improved accessibility</li>
+          <li>Shorter summary for app listing</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.4" date="2023-01-19">
+      <description>
+        <p>Subtly improved icon; it should be more visible in the app grid, dash, and anywhere else with a dark background</p>
+      </description>
+    </release>
+    <release version="3.0.3" date="2022-09-28">
+      <description>
+        <p>Hotfix: fix About window when closing and re-opening it</p>
+      </description>
+    </release>
+    <release version="3.0.2" date="2022-09-27">
+      <description>
+        <p>More fun for everyone</p>
+        <ul>
+          <li>Added eight more original replies</li>
+          <li>Added “About” window</li>
+          <li>Improvements to developer tools to make translations easier to keep up to date</li>
+          <li>Italian translations thanks to Albano Battistella</li>
+          <li>Updated runtime to GNOME 43</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.1" date="2022-09-09">
+      <description>
+         <p>Hotfix: fix a crash on startup from trying to access nonexistent settings</p>
+      </description>
+    </release>
+    <release version="3.0.0" date="2022-09-08">
+      <description>
+         <p>Hello, GNOME</p>
+         <ul>
+           <li>Whole new UI</li>
+           <li>elementary → GNOME styling</li>
+           <li>Technical upgrade to the latest GNOME platform including GTK4 and LibAdwaita</li>
+         </ul>
+      </description>
+    </release>
+    <release version="2.0.0" date="2021-08-09">
+      <description>
+        <p>Hello, Odin</p>
+        <ul>
+          <li>Updated for OS 6 and Flatpak</li>
+          <li>Turkish translations thanks to Safak GENISOL</li>
+          <li>Portuguese translations thanks to André Barata</li>
+          <li>Spanish translations thanks to @kevincos5</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.1.4" date="2020-02-20">
+      <description>
+        <p>Refreshed icons thanks to Micah Ilbery</p>
+      </description>
+    </release>
+    <release version="1.1.3" date="2020-02-17">
+      <description>
+        <p>Polish translations thanks to Michał Nowakowski</p>
+      </description>
+    </release>
+    <release version="1.1.2" date="2019-04-09">
+      <description>
+        <p>Dutch translations thanks to Heimen Stoffels</p>
+      </description>
+    </release>
+    <release version="1.1.1" date="2019-03-23">
+      <description>
+        <p>French translations thanks to @NathanBnm</p>
+      </description>
+    </release>
+    <release version="1.1.0" date="2019-01-25">
+      <description>
+        <p>Clairvoyant is now translatable.</p>
+      </description>
+    </release>
+    <release version="1.0.4" date="2019-01-04">
+      <description>
+        <p>Happy new year! This release contains AppData fixes.</p>
+      </description>
+    </release>
+    <release version="1.0.2" date="2018-07-23">
+      <description>
+        <p>Fix 48px icon</p>
+      </description>
+    </release>
+    <release version="1.0.1" date="2018-07-20">
+      <description>
+        <p>Post-release update</p>
+        <ul>
+          <li>Clean up AppStream data</li>
+          <li>Expand on the description</li>
+          <li>Change price to $1</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2018-07-20">
+      <description>
+        <p>It is decidedly so.</p>
+        <ul>
+          <li>Initial release</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1" />
+
+  <url type="homepage">https://cassidyjames.com/apps</url>
+  <url type="bugtracker">https://github.com/cassidyjames/clairvoyant/issues</url>
+  <url type="translate">https://github.com/cassidyjames/clairvoyant/tree/main/po#readme</url>
+  <url type="vcs-browser">https://github.com/cassidyjames/clairvoyant</url>
+  <url type="donation">https://cassidyjames.com/pay</url>
+  <url type="help">https://cassidyjames.com/support</url>
+</component>

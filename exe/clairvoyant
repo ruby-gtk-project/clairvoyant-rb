@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "clairvoyant"
+# Entry point for the Ruby port of Clairvoyant, standing in for the `main` of
+# upstream's src/Application.vala: bind the text domain, build the app, run it.
+# The binding happens when lib/intl.rb is required, which Application does.
 
-Clairvoyant::Application.new.build.run
+require_relative '../lib/application'
+
+Application.new.build.run
