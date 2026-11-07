@@ -1,185 +1,188 @@
 # Component inventory — clairvoyant-rb
 
-Upstream is `origin/main` (Vala, meson/GResource build). Clairvoyant is a
-small app — one window, one dialog, one custom widget, no settings, no
-shortcuts window, no preferences, no submenus. The whole upstream source tree
-(excluding `po/`) is:
+Upstream is `cassidyjames/clairvoyant`, read at `origin/main` in this clone.
+It is a three-file Vala app with no `.ui`/`.blp` templates, no GSettings
+schema, and no GResource menu — every widget is built in code, so the scan
+below is a straight read of the three source files plus the AppData the About
+window consumes and the one stylesheet. `po/POTFILES.in` names the full
+translatable surface (`src/FortuneLabel.vala`, `src/MainWindow.vala`,
+`data/com.cassidyjames.clairvoyant.metainfo.xml.in`); no other upstream file
+contributes user-facing strings.
 
-```
-src/Application.vala
-src/Config.vala.in
-src/config.vapi
-src/FortuneLabel.vala
-src/MainWindow.vala
-data/gresource.xml
-data/icons/{app,symbolic,about-symbolic}.svg
-data/metainfo.appdata.xml.in
-data/styles/style.css
-data/launcher.desktop.in
-po/*.po, po/POTFILES.in, po/com.cassidyjames.clairvoyant.pot
-```
+Order below is the order a user meets them: the application, then the window,
+then the window's two pieces (the fortune, the About dialog), then the two
+supporting files that have no widgets of their own.
 
-There are no `.ui`/`.blp` files — every widget is built in Vala source — and
-no GSettings schema, no shortcuts window, no preferences dialog, no submodule.
+## src/Application.vala — the application object
 
-## Status summary
+| Item | Detail |
+|---|---|
+| Class | `Clairvoyant : Adw.Application` |
+| Action | `app.quit` — `SimpleAction`, installed on the application |
+| Accels | `app.quit` → `Escape`, `<Ctrl>Q`, `<Ctrl>W` |
+| Behaviour | `activate`: presents the existing window if one is already up, otherwise builds `MainWindow` and shows it; `quit_action.activate` destroys the main window |
 
-Every upstream unit already has a corresponding `lib/*.rb` file on `ruby`, and
-reading each file against its upstream source shows the port already
-reproduces the widget tree, the CSS classes, the signal wiring and the one
-action (`app.quit`) upstream installs. This is a parity survey, not a gap
-list — see "Residual notes" at the end for the handful of things worth a
-second look rather than components still to build.
+**Port status: exists.** `lib/application.rb` — `Application`. Builds a
+`Gtk::Application` (not `Adwaita::Application`, which the port's comments say
+is broken in the Ruby bindings) with `Adwaita.init` called by hand, reproduces
+the activate-presents-existing-window branch, and installs `quit_action` with
+the same three accels (`QUIT_ACCELS`) on `app.quit`. Full behavioural parity;
+no gap.
 
-## Components, in the order a user meets them
+## src/MainWindow.vala — the one window the app has
 
-### `src/Application.vala` → `lib/application.rb` — the app itself (exists)
-
-Not a widget, but the unit that owns the action and the accelerators.
-
-| Facet | Upstream | Port |
-|---|---|---|
-| Class | `Clairvoyant : Adw.Application` | `Application` (plain Ruby class wrapping `Gtk::Application`, with a comment explaining `Adwaita::Application` is broken in the bindings) |
-| Action | `app.quit` (`SimpleAction`) | `quit_action` → `Gio::SimpleAction.new('quit', nil)`, present |
-| Accels | `Escape`, `<Ctrl>Q`, `<Ctrl>W` on `app.quit` | `QUIT_ACCELS = ['Escape', '<Ctrl>Q', '<Ctrl>W']`, present |
-| Signal | `activate` → present existing window or build one | `app.signal_connect('activate')` branches on `app.windows.empty?`, present |
-| `quit_action.activate` | destroys the main window | `action.signal_connect('activate') { main_window.close }`, present |
-
-Kind: **application class**. Present, matches.
-
-### `src/MainWindow.vala` → `lib/main_window.rb` — the whole app on screen (exists)
-
-| Widget | × | CSS | Signals | Port status |
+| Widget | × | CSS | Signals | Notes |
 |---|---:|---|---|---|
-| `Adw.ApplicationWindow` (not resizable, no title bar chrome) | 1 | — | — | `Adwaita::ApplicationWindow`, `resizable = false`, present |
-| `Gtk.WindowHandle` | 1 | — | — | `window_handle`, present — whole surface drags the window |
-| `Gtk.Box` (vertical, main layout) | 1 | — | — | `main_layout`, present |
-| `Gtk.HeaderBar` | 1 | `flat` | — | `header`, present, `flat` class set |
-| `Gtk.Button` (about button) | 1 | `dim-label` | `clicked` → present About | `about_button`, icon `about-symbolic`, `dim-label`, `clicked`, present |
-| `Gtk.Label` (empty header title widget) | 1 | — | — | `header.title_widget = Gtk::Label.new(nil)`, present |
-| `FortuneLabel` (composite, defined in its own file) | 1 | — | `realize` → randomize with `allow_current: true` | `fortune_label`, `margin_top`/`margin_bottom` set, `realize` connected, present |
-| `Gtk.Button` (Ask Again) | 1 | `suggested-action`, `pill` | `clicked` → randomize | `ask_button`, label `_('Ask Again')`, both classes, `clicked`, present |
-| `Adw.AboutWindow` (built via `from_appdata`, defined in its own file in the port) | 1 | — | — | `about_dialog` → `AboutDialog`, present (see below) |
+| `Adw.ApplicationWindow` | 1 | — | — | not resizable, `icon_name = APP_ID` |
+| `Gtk.WindowHandle` | 1 | — | — | wraps the whole layout so the entire surface drags the window |
+| `Gtk.Box` (vertical) | 1 | — | — | `main_layout`: header, fortune, button |
+| `Gtk.HeaderBar` | 1 | `flat` | — | empty `title_widget` (a bare `Gtk.Label`) |
+| `Gtk.Button` | 1 | `dim-label` | `clicked` → presents the About window | the About button, icon `about-symbolic`, packed at header start |
+| `FortuneLabel` | 1 | — | `realize` → `randomize_fortune(allow_current: true)` | the component below; `margin_top`/`margin_bottom` 24 |
+| `Gtk.Button` | 1 | `suggested-action`, `pill` | `clicked` → `randomize_fortune` | label "Ask Again", `halign: center`, `margin_bottom` 48 |
+| `Adw.AboutWindow` | 1 | — | — | built via `.from_appdata`; see the About dialog row below |
 
-Behaviour: `randomize_fortune` (recursive draw-until-different unless
-`allow_current`) → ported as `MainWindow#randomize_fortune`, present.
+Behaviour: `randomize_fortune(allow_current)` draws `Random.int_range(1, 29)`
+and re-draws until it differs from the stack's current page unless
+`allow_current` is set; the window's title is taken from
+`about_window.application_name` after the AboutWindow parses the AppData.
 
-Kind: **window**. Present, matches, including the window title being taken
-from the About dialog's AppData (`win.title = about_dialog.application_name`)
-rather than stored separately.
+**Port status: exists.** `lib/main_window.rb` — `MainWindow`. Every widget,
+CSS class and signal above has a memoized accessor and a matching
+`signal_connect`: `window` (`Adwaita::ApplicationWindow`, not resizable),
+`window_handle`, `main_layout`, `header` (`flat`), `about_button`
+(`dim-label`, `about-symbolic` icon, `clicked` → `about_dialog.present`),
+`fortune_label` (margins 24/24, `realize` → `randomize_fortune(allow_current:
+true)`), `ask_button` (`suggested-action`, `pill`, label "Ask Again",
+`clicked` → `randomize_fortune`). `randomize_fortune` reproduces the
+redraw-until-different logic via `Fortunes.random_page_name`. Window title is
+set from `about_dialog.application_name`, matching upstream's AppData-sourced
+title. No gap.
 
-### `src/FortuneLabel.vala` → `lib/fortune_label.rb` + `lib/fortunes.rb` — the answer on screen (exists)
+## src/FortuneLabel.vala — the fortune on screen
 
-Upstream keeps the 28-row content table and the widget in one file; the port
-splits it into a data module (`Fortunes`, house style for "the static table a
-widget reads") and the widget itself. Per the component-identification skill,
-union both for the comparison:
-
-| Widget | × | CSS | Signals | Port status |
+| Widget | × | CSS | Signals | Notes |
 |---|---:|---|---|---|
-| `Gtk.Box` (outer, horizontal in upstream's call but functions as the component root) | 1 | — | — | `FortuneLabel < Gtk::Box`, present |
-| `Gtk.Stack` (crossfade) | 1 | — | — | `stack`, `transition_type = :crossfade`, public ivar as upstream's `public Gtk.Stack stack`, present |
-| `Gtk.Box` (vertical, per-page) | 28 (repeater, one per fortune) | — | — | repeater over `Fortunes`, present |
-| `Gtk.Label` (fortune title) | 28 (repeater) | `title-1`, plus one of `success`/`error`/`warning` per row (dynamic, data-driven) | — | repeater, present; all three dynamic classes are listed in `Fortunes`, not collapsed to "dynamic" |
+| `Gtk.Box` (self, horizontal in the port / unspecified orientation upstream*) | 1 | — | — | the component's own root |
+| `Gtk.Stack` | 1 | — | — | `transition_type: crossfade`; `public`, driven by `MainWindow` |
+| `Gtk.Box` (vertical) | 28 | — | — | one per fortune; `margin_start`/`margin_end` 24, `halign: center` — a **repeater** over the 28-row table |
+| `Gtk.Label` | 28 | `title-1` + one of `success` / `error` / `warning` (dynamic, per-fortune) | — | `selectable = true`; the fortune's translated text |
 
-Data table (`Fortunes`, 28 rows, `success`/`error`/`warning` in upstream's
-order): present, matches upstream's `Content[]` literal row for row.
+*Upstream's `FortuneLabel : Gtk.Box` has no explicit orientation set on
+itself (Vala/GTK default is horizontal); the port's `super(:horizontal, 0)`
+matches that default explicitly — not a gap, just worth naming since it is
+the one place the port is more explicit than upstream.
 
-Kind: **custom widget** + **data module**. Present, matches.
+Data: upstream's `static Content[] content` — 28 literal entries, each a
+`{title, css_class}` pair, `css_class` ∈ {`success`, `error`, `warning`}: 14
+`success`, 7 `error`, 7 `warning`.
 
-### `Adw.AboutWindow.from_appdata(...)` (inline in `MainWindow.vala`) → `lib/about_dialog.rb` — the About dialog (exists)
+**Port status: exists**, split across two files as the house style allows for
+a data table:
+- `lib/fortune_label.rb` — `FortuneLabel < Gtk::Box`. Builds the `Gtk::Stack`
+  (`crossfade`), the 28 `page()` boxes (margins 24/24, `halign: center`) and
+  the 28 `title_label()` labels (`selectable`, `title-1` + the fortune's own
+  css class) via `Fortunes.page_names.each`. `stack` is a public memoized
+  accessor, matching upstream's public field.
+- `lib/fortunes.rb` — `Fortunes` module. The 28-row `TABLE`, each `[N_(title),
+  css_class]`, counted: 14 `SUCCESS`, 7 `ERROR`, 7 `WARNING` — matches
+  upstream's table exactly row for row (spot-checked the full list against
+  `src/FortuneLabel.vala`: titles and class assignments line up one to one).
+  `page_names`/`random_page_name` reproduce the 1-based `i.to_string()` paging
+  upstream's stack and randomizer rely on.
 
-Upstream builds this inline rather than in its own file; the port gives it
-one, which is the correct house-style split (one widget, one file) and still
-counts as the same component.
+No gap.
 
-| Facet | Upstream | Port |
-|---|---|---|
-| Widget | `Adw.AboutWindow.from_appdata(path, VERSION)` | `AboutDialog < Adwaita::AboutWindow`, since `from_appdata` is unbound — port parses the AppData XML itself (`AppData` inner class) and sets each property by hand |
-| `transient_for` | main window | set in `main_window.rb`'s `about_dialog` memo |
-| `hide_on_close` | `true` | `about.hide_on_close = true`, present |
-| `translator_credits` | `_("translator-credits")` | present |
-| `copyright` | `"© 2018–%i %s" % [year, developer_name]` | `format('© 2018–%d %s', Time.now.year, @appdata.developer_name)`, present |
-| License mapping | N/A (native `project_license` property) | port adds `LICENSES` SPDX→`Gtk::License` table since it must do by hand what `from_appdata` would have done; falls back to `CUSTOM` + raw SPDX string |
+## data/metainfo.appdata.xml.in — the About window's data source
 
-Kind: **dialog**. Present, matches, including the one behavioural piece
-(`hide_on_close`, so the About button reuses the same window instance) that
-is easy to drop in a port and wasn't.
+Not a widget file, but it is what upstream's `Adw.AboutWindow.from_appdata`
+reads to populate the dialog `MainWindow` presents, and `.from_appdata` is not
+bound in the Ruby `adwaita` gem (only the plain constructor is), so this is a
+real porting unit in its own right.
 
-### `src/Config.vala.in` + root `meson.build` conf → `lib/config.rb` (exists)
+Upstream-derived fields the About window shows: `application_name` (`<name>`),
+`application_icon`/id (`<id>`), `developer_name` (`<developer_name>` or
+`<developer><name>`), `comments` (`<summary>`), `license_type`/`license`
+(`<project_license>`, SPDX → `Gtk::License`), `website`/`issue_url`/
+`support_url` (`<url type="homepage"/"bugtracker"/"help">`), `version` +
+matching `<release>`'s `<description>` as `release_notes`, `copyright` (built
+from the current year + developer name, same as upstream's `"© 2018–%i
+%s".printf(...)`), and `translator_credits`.
 
-Not a widget — build-time constants (`APP_ID`, `VERSION`, `GETTEXT_PACKAGE`,
-locale dir). Present as literals since there is no configure step. Kind:
-**support module**.
+**Port status: exists.** `lib/about_dialog.rb` — `AboutDialog <
+Adwaita::AboutWindow`, with a nested `AppData` class that regex-reads the
+same tags (documented in-file as a deliberate substitute for `.from_appdata`
+and for `rexml`, which is outside the port's gem closure) and a `LICENSES`
+table mapping the SPDX ids this app's metadata can name to `Gtk::License`
+constants. Every field upstream's dialog shows has a matching assignment.
+`hide_on_close = true` reproduces upstream's `hide_on_close` so the same
+instance comes back on a second click. No gap.
 
-### `data/gresource.xml` + icon/install rules in `data/meson.build` → `lib/resources.rb` (exists)
+## data/gresource.xml + data/styles/style.css — resources and the stylesheet
 
-Upstream's GResource bundle (metainfo, stylesheet, about-symbolic icon) plus
-the install-time icon renames (`app.svg`/`symbolic.svg` → app-id-named icons
-in `hicolor/scalable/apps`). Port has no GResource; `Resources.register`
-adds `data/icons` to the icon theme search path instead, and `Resources::METAINFO`
-points at the appdata file directly. Kind: **support module**. Present,
-matches in effect.
+No widgets; two supporting units the port needs its own equivalent of because
+it has no GResource compiler.
 
-### `data/styles/style.css` → `lib/style.rb` (exists)
+- **Icons** (`about-symbolic.svg`, plus the app icon upstream's `meson.build`
+  installs under the app ID). **Port status: exists** — `lib/resources.rb`
+  adds `data/icons` to the display's icon theme search path at activation.
+- **Stylesheet** (`:root { --window-bg-color: …; --window-fg-color: … }`,
+  tinting the window with the accent colour). **Port status: exists** —
+  `lib/style.rb` loads the same CSS file through a `Gtk::CssProvider` at
+  `PRIORITY_APPLICATION`, same priority band GResource auto-loading gives it.
 
-One rule block, tinting window bg/fg with the accent colour via
-`color-mix`. Port loads the same file through a `Gtk::CssProvider` at
-application priority. Kind: **stylesheet / support module**. Present,
-matches.
+## src/Config.vala.in, src/config.vapi — build-time constants
 
-### `src/Application.vala`'s `Intl.bindtextdomain` calls → `lib/intl.rb` (exists)
+`APP_ID`, `VERSION`, `GETTEXT_PACKAGE`, `LOCALEDIR` — meson substitutions, no
+widgets. **Port status: exists** — `lib/config.rb` (`APP_ID`, `VERSION`,
+`GETTEXT_PACKAGE`, `DATA_DIR`, `LOCALE_DIR` as literals, since the port has no
+configure step).
 
-Kind: **support module**. Present, matches (binds the same gettext domain
-for both the pure-Ruby `gettext` gem and GLib's own catalogue).
+## Application.vala's `main()` — gettext binding
 
-### `po/*.po`, `po/POTFILES.in`, `po/com.cassidyjames.clairvoyant.pot` → `po/` (exists)
+`Intl.bindtextdomain`/`bind_textdomain_codeset`/`textdomain` against
+`Config.GETTEXT_PACKAGE`/`LOCALEDIR`. **Port status: exists** —
+`lib/intl.rb` binds the same domain through the `gettext` gem (for the app's
+own strings) and `GLib::GetText` (for GLib/AppStream strings), against
+`Config::GETTEXT_PACKAGE`/`LOCALE_DIR`.
 
-The full upstream catalogue (200+ locale files plus the template) is present
-unchanged in the port's `po/` directory.
+## Not present upstream — confirmed absent, not a port gap
 
-### `data/metainfo.appdata.xml.in` → read at runtime by `AboutDialog::AppData` (no port file of its own)
+- **No GSettings schema.** No `.gschema.xml` anywhere in `origin/main`'s
+  tree; nothing in `src/` calls `Gio.Settings`. There is nothing for the
+  port to bind.
+- **No GResource menu, no `Gtk.PopoverMenu`, no `Gio.Menu`.** The only
+  `Gio.SimpleAction` upstream installs is `app.quit`, already covered above.
+- **No shortcuts window / `Gtk.ShortcutsWindow`.** The only keyboard
+  entry points are the three `app.quit` accels, already covered above.
+- **No `.ui`/`.blp` files at all** — `find . -name '*.blp' -o -name '*.ui'`
+  against `origin/main`'s tree returns nothing; every widget upstream builds
+  is built in `src/*.vala`, which this inventory read directly.
+- **`po/` catalogue** (182 `.po` files + the `.pot`) is counted and checked by
+  `translation-parity`, not by this component inventory. Naming it here so no
+  later reader mistakes its absence from the tables above for this survey
+  having missed it.
 
-Not transcribed into Ruby; the port reads upstream's own XML file at runtime
-(`Resources::METAINFO`), which is a stronger form of parity than duplicating
-its content in source. Not a gap.
+## Summary
 
-## Non-components (confirmed absent upstream, so absent is correct)
+| Upstream unit | → port file | Kind | Exists on `ruby`? |
+|---|---|---|---|
+| `src/Application.vala` | `lib/application.rb` | application class | yes |
+| `src/MainWindow.vala` | `lib/main_window.rb` | window | yes |
+| `src/FortuneLabel.vala` (widgets) | `lib/fortune_label.rb` | composite widget | yes |
+| `src/FortuneLabel.vala` (`Content[]` table) | `lib/fortunes.rb` | data table | yes |
+| `data/metainfo.appdata.xml.in` (as read by `Adw.AboutWindow.from_appdata`) | `lib/about_dialog.rb` | dialog | yes |
+| `data/gresource.xml` (icons) | `lib/resources.rb` | resource loader | yes |
+| `data/styles/style.css` | `lib/style.rb` | stylesheet loader | yes |
+| `src/Config.vala.in`, `src/config.vapi` | `lib/config.rb` | constants | yes |
+| `src/Application.vala`'s `main()` gettext calls | `lib/intl.rb` | i18n binding | yes |
 
-- No `.ui`/`.blp` files anywhere in the tree — confirmed by `git ls-tree` and a
-  `.ui`/`.blp` search; nothing for the port to be missing.
-- No GSettings schema (`*.gschema.xml`).
-- No shortcuts window, no preferences dialog/window.
-- No submenus or `Gio.Menu` models.
-- No submodules (`.gitmodules` absent).
-- Only one GTK-level action exists in the whole app (`app.quit`); it is
-  present and correctly wired (see Application above).
-
-## Residual notes (not gaps — worth a second look)
-
-- `about_dialog.rb`'s `AppData` parser is a hand-rolled AppStream-XML reader
-  (regex-based, explicitly because `rexml` is "not in the port's gem
-  closure"). This is the kind of thing the accountability audit looks for as
-  a hand-rolled substitute for a gem — but it is not standing in for one of
-  this app's two mandated gems (`gtk4`/`adwaita`/`glib2` plus `ashpd`;
-  clairvoyant has no portal use, so `ashpd` does not apply to this app at
-  all) — it is substituting for `rexml`, a stdlib library, on a fixed,
-  trusted, ship-with-the-app document. Flagging for visibility, not fixing
-  as part of this survey (survey step does not write app code).
-- `clairvoyant-rb.gemspec` and `nix/Gemfile` were not audited for the
-  `ashpd`/gem-wiring checklist in this step, since the survey's job is the
-  component inventory; that is a separate pass if the maintainers want it,
-  and this app does not call any portal API (no file chooser, no
-  background/autostart, no notifications) that `ashpd` would cover.
-
-## Totals
-
-- Upstream user-facing units: 4 (`Application`, `MainWindow`, `FortuneLabel`,
-  the inline `AboutWindow`) + 1 data table + 3 support concerns (config,
-  resources/icons, stylesheet) + gettext wiring.
-- Port `lib/*.rb` files: 10, one per upstream unit/concern (`about_dialog.rb`,
-  `application.rb`, `clairvoyant.rb` (gem entry point), `config.rb`,
-  `fortune_label.rb`, `fortunes.rb`, `intl.rb`, `main_window.rb`,
-  `resources.rb`, `style.rb`), plus `clairvoyant/rb/version.rb` (gem
-  scaffolding, not an upstream port unit).
-- Components found missing from the port: **0**.
+Every upstream file that contributes a user-facing component, action, accel,
+or piece of About-dialog data already has a corresponding `lib/*.rb` file on
+`ruby`, and each one's widgets, CSS classes and signal connections were
+checked line-for-line against upstream's source above — this inventory found
+no missing component for `component-parity` to flag as absent. What
+`component-parity`, `test-parity` and `translation-parity` still owe this
+fork is byte-level verification (string-for-string CSS/signal matching
+already spot-checked here, full `po/` catalogue parity, and test coverage),
+not new component discovery.
