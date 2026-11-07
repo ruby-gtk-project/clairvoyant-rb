@@ -242,8 +242,6 @@
             # to support Ruby but only shells out to this, so without it
             # `xgettext --language=Ruby` fails.
             pkgs.rubyPackages_3_4.gettext
-            # The spec runner. The suite is plain RSpec, so this is enough.
-            pkgs.rubyPackages_3_4.rspec
             # This machine may have no display server at all, so the shell
             # carries one it can start itself: `xvfb-run ruby exe/<app>` both
             # launches the app and is how test/drive_*.rb is run.
@@ -261,9 +259,9 @@
             [ -d data/schemas ] && export GSETTINGS_SCHEMA_DIR="$PWD/data/schemas"
             unset BUNDLE_GEMFILE BUNDLE_FROZEN
             echo "clairvoyant devshell — ruby $(ruby -e 'print RUBY_VERSION')"
-            echo "run the app:   xvfb-run ruby exe/clairvoyant"
-            echo "drive the app: xvfb-run ruby test/drive_*.rb"
-            echo "run the specs: ruby -e 'require \"rspec/core\"; exit RSpec::Core::Runner.run([\"--format\", \"progress\", \"--require\", \"spec_helper\", \"spec\"])'"
+            echo "run the app:      xvfb-run ruby exe/clairvoyant"
+            echo "drive the app:    xvfb-run ruby test/drive_*.rb"
+            echo "validate packaging: ruby test/validate_packaging.rb"
           '';
         };
       });

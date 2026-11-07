@@ -97,27 +97,43 @@ class AboutDialog < Adwaita::AboutWindow
   # are matched directly. Each lookup takes the first matching element, which is
   # the component's own: <name> before the developer's <name>, <summary> before
   # any release description.
+  #
+  # This is the metainfo's raw, untranslated .in-derived copy, not a
+  # locale-merged one — upstream's own i18n.merge_file step never runs here —
+  # so the translatable tags are run back through the Intl binding instead:
+  # each one is exactly the msgid xgettext extracted from
+  # data/metainfo.appdata.xml.in (per po/POTFILES.in), so looking it up in the
+  # same catalogue the rest of the app's strings use reproduces what msgfmt
+  # --xml would have merged in, without shelling out to msgfmt at every
+  # startup. <developer_name> and the <url> tags are not translatable in the
+  # AppStream schema and are returned as-is.
     class AppData
+      include Intl
+
       def initialize(xml)
         @xml = xml
       end
 
       def id = text('id')
-      def name = text('name')
-      def summary = text('summary')
+      def name = _(text('name'))
+      def summary = _(text('summary'))
       def project_license = text('project_license')
 
       # AppStream allows either the deprecated <developer_name> or the
-      # <developer><name> element; this file carries both.
+      # <developer><name> element; this file carries both. Neither is
+      # translatable (translatable="no" on <developer_name>).
       def developer_name = text('developer_name') || text('name', skip: 1)
 
       def url(type) = @xml[%r{<url\s+type="#{type}"\s*>(.*?)</url>}m, 1]&.strip
 
       # The <description> of the <release> whose version matches, as the
-      # AppStream markup subset libadwaita renders.
+      # AppStream markup subset libadwaita renders. Each <p> and <li> inside a
+      # release description is its own msgid, same as upstream's AppStream
+      # translation rules split them for xgettext.
       def release_notes(version)
         @xml[%r{<release\s+version="#{Regexp.escape(version)}".*?>(.*?)</release>}m, 1]
           &.then { |release| release[%r{<description>(.*?)</description>}m, 1] }
+          &.then { |notes| translate(notes) }
           &.then { |notes| dedent(notes) }
       end
 
@@ -127,6 +143,10 @@ class AboutDialog < Adwaita::AboutWindow
           @xml.scan(%r{<#{tag}(?:\s[^>]*)?>(.*?)</#{tag}>}m)
             .dig(skip, 0)
             &.strip
+        end
+
+        def translate(markup)
+          markup.gsub(%r{<(p|li)>(.*?)</\1>}m) { "<#{Regexp.last_match(1)}>#{_(Regexp.last_match(2))}</#{Regexp.last_match(1)}>" }
         end
 
         def dedent(markup)
