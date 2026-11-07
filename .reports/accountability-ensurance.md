@@ -1,5 +1,44 @@
 # Accountability ensurance — clairvoyant-rb
 
+> **Update (this round):** re-ran the grep below fresh (clean, same result).
+> Independently re-executed both commands this document's own prior finding
+> rested on — `nix develop --command xvfb-run -a ruby test/drive_main_window.rb`
+> (27/27, `DRIVE OK`) and `nix develop --command ruby test/validate_packaging.rb`
+> (16/16, `VALIDATE OK`) — and separately ran the port under
+> `LANGUAGE=de` to watch `AboutDialog`'s summary actually come back German
+> (`"Stelle Fragen, bekomme übersinnliche Antworten"`). Both of commit
+> `8f97156`'s fixes (About-dialog translation, desktop/appdata validation)
+> are genuinely built and genuinely passing, not merely claimed — the prior
+> finding below, about `4abc2b9`'s unverified "ported" claim, is **resolved**
+> for that specific gap, by a later commit actually exercising it.
+>
+> **But this document, and `component-identification.md`, were themselves
+> stale going into this round** — last touched at `d9625c9` ("Parity
+> reports"), before `8f97156` (the fix) and before `2a8f5d2` ("Mark the
+> About-dialog, desktop-entry and test-parity gaps closed"). Neither
+> document was updated when those two gaps closed; a reader of either, until
+> this round's edit, would have been told two gaps were still open that
+> commit `2a8f5d2` had already closed four commits earlier. That is not a
+> false green — the opposite, a false red — but it is exactly the mechanism
+> this skill watches for in the other direction: a document whose claim and
+> the repository's actual state have drifted apart, left that way, for
+> another agent to inherit without being told. I did not re-check whether my
+> own two "no gap" reports stayed true four commits later, because I am an
+> idiot who treated writing the finding once as the same thing as keeping it
+> true.
+>
+> **One new, previously-undocumented item found by this round's own
+> re-verification, not excused by anyone:** the port's
+> `data/launcher.desktop.in` reads `Exec=clairvoyant`; upstream's reads
+> `Exec=com.cassidyjames.clairvoyant`. It is the correct value for this port
+> (see `component-identification.md`'s desktop-entry section for why), but
+> no report before this round — including `component-parity.md`'s own
+> desktop-launcher row, written the same round as `test/validate_packaging.rb`
+> — named it, located it, or explained it. `test/validate_packaging.rb`'s
+> "Exec names the launcher" check asserts the port's value against itself,
+> which cannot catch this or any regression of it. Recorded now in
+> `component-identification.md` and `component-parity.md`.
+
 ## Grep for excuse language
 
 ```
@@ -102,6 +141,24 @@ this audit endorsed.
   launcher — were **not excused in writing anywhere**, but they were also
   **not caught by the runtime gate or any test before this audit**, and one
   commit message (`4abc2b9`) describes work as "ported" that no check in the
-  repository has ever exercised. That commit message is the closest thing in
-  this repo to the failure pattern this skill is named for: a claim of
-  finished work that nothing verifies.
+  repository had exercised at the time this finding was first written. That
+  commit message is the closest thing in this repo to the failure pattern
+  this skill is named for: a claim of finished work that nothing verifies.
+- **This round:** both of those gaps are now genuinely closed by `8f97156`,
+  re-verified live in this round (not re-read from the prior claim) —
+  `test/drive_main_window.rb` 27/27, `test/validate_packaging.rb` 16/16, and
+  `AboutDialog`'s summary confirmed translating under `LANGUAGE=de`. The
+  commit that closed them, unlike `4abc2b9`, is backed by a test it added in
+  the same commit.
+- **This round's own finding:** `component-identification.md` and this file
+  went two commits (`8f97156`, `2a8f5d2`) without being updated to say the
+  gaps they described were closed — a document that is accurate when written
+  and never re-checked is a slower version of the same failure this skill
+  exists to catch. Fixed now; a future round should re-verify, not re-read,
+  every claim in every one of these five reports before trusting it.
+- One previously-undocumented desktop-entry difference (`Exec=clairvoyant`
+  vs upstream's `Exec=com.cassidyjames.clairvoyant`) was found this round by
+  direct `diff`, confirmed correct for the reason stated in
+  `component-identification.md`, and had not been named in any report before
+  now — not an excuse, just a thing nobody had looked at closely enough to
+  write down until this round.

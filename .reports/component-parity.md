@@ -14,6 +14,20 @@ is checked on all four axes: count, style, behaviour, text.
 > `test/validate_packaging.rb` 16/16, both passing live. The row-by-row
 > detail below predates both fixes and is kept for its description of what
 > was wrong; treat its two "GAP" verdicts as historical, not current.
+>
+> **Second update (this round):** one more desktop-launcher difference,
+> independent of the fix above, found this round and not previously recorded
+> anywhere: `data/launcher.desktop.in`'s `Exec=clairvoyant` against upstream's
+> `Exec=com.cassidyjames.clairvoyant`. Correct — the Nix build's
+> `makeWrapper` installs the gemspec's `exe/clairvoyant` to `$out/bin/clairvoyant`,
+> not to a binary named after the app ID, so the port's value is the one that
+> actually resolves on a Nix-installed copy — but it is a genuine textual
+> difference from upstream's file that neither this report nor
+> `component-identification.md` named before now. Recorded as a
+> correspondence, located, in `component-identification.md`'s desktop-entry
+> section. `test/validate_packaging.rb`'s "Exec names the launcher" check
+> asserts the port's own value against itself and would not have caught a
+> regression here either way; it is not a check of this correspondence.
 
 
 ## Application (`src/Application.vala` → `lib/application.rb`)

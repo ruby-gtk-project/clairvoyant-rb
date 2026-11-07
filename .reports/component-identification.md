@@ -1,8 +1,18 @@
 # Component identification — clairvoyant-rb
 
 Upstream ref audited: `origin/main` @ `f4f3a605` ("ci: only mirror on pushes to
-main"). Port ref audited: `ruby` @ `4f57ec8` ("Declare the runtime GTK/gettext
-dependencies the gemspec was missing").
+main") — unchanged since the previous round, re-confirmed this round
+(`git rev-parse --short origin/main` still `f4f3a60`). Port ref audited:
+`ruby` @ `2a8f5d2` ("Mark the About-dialog, desktop-entry and test-parity
+gaps closed") — the current tip, re-walked this round rather than trusted
+from the prior round's `4f57ec8`. Two things changed between those two refs
+that the rest of this document's body (written against `4f57ec8`) predates
+and this update records directly: `8f97156` added `test/validate_packaging.rb`
+and `.github/workflows/drive.yml` (not units of their own — they are the test
+and CI counterparts of the `data/meson.build` test targets noted below, not
+new widget-tree files) and taught `AboutDialog::AppData` to translate its
+metainfo fields; `2a8f5d2` only edited `.reports/`. Neither changed the widget
+inventory itself, so the tables below still hold without re-deriving them.
 
 No `.ui`/`.blp` files exist anywhere in the upstream tree (confirmed by
 `git ls-tree -r --name-only origin/main` and a `.ui`/`.blp` name search) — every
@@ -123,7 +133,24 @@ carried into `translation-parity.md` and `component-parity.md` rather than
 re-litigated here.
 
 No desktop-entry component (`data/launcher.desktop.in`'s merged output) is
-read or exercised by anything in `lib/`, `exe/` or `test/` — the port's Ruby
-code has no counterpart to the `.desktop` file at all; it exists only as the
-unmodified `.in` template plus a Nix-build-time `msgfmt --desktop` step. See
-`component-parity.md` for why this is a gap and not merely a build detail.
+read or exercised by anything in `lib/`, `exe/` — the port's Ruby code has no
+counterpart to the `.desktop` file at all; it exists as the `.in` template
+plus a Nix-build-time `msgfmt --desktop` step. As of `8f97156`,
+`test/validate_packaging.rb` runs and asserts that merge (see
+`component-parity.md` / `test-parity.md` for why that now closes the gap
+this document originally flagged here).
+
+**One undocumented difference found this round, independent of the
+translation fix.** The port's `data/launcher.desktop.in` reads
+`Exec=clairvoyant`; upstream's reads `Exec=com.cassidyjames.clairvoyant`
+(confirmed: `diff` between the two files shows exactly this one line).
+This is correct, not a bug — `flake.nix`'s `makeWrapper` installs the port's
+binary to `$out/bin/clairvoyant` (the gemspec's `exe/clairvoyant`, not an
+app-ID-named binary), so `Exec=com.cassidyjames.clairvoyant` would launch
+nothing on a Nix-installed copy of the port and `Exec=clairvoyant` is the one
+that resolves. But no prior report (`component-parity.md` included) named
+this difference or the reasoning above; `test/validate_packaging.rb`'s own
+check ("desktop entry Exec names the launcher") asserts the port's value
+against itself, silently, rather than being read against upstream's file at
+all. Recorded here as the correspondence it is, now that it has been found
+and located.
