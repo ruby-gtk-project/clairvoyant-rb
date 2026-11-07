@@ -1,5 +1,29 @@
 # Component parity — clairvoyant-rb
 
+> **Third update (this round, fresh re-audit at `b698135`):** independently
+> re-ran both gates live this round, not re-read from either prior update:
+> `test/drive_main_window.rb` 27/27 and `test/validate_packaging.rb` 16/16
+> (43 total, matching this round's runtime-gate figure exactly). Also
+> independently ran the About dialog under `LANGUAGE=de` myself and confirmed
+> `comments` comes back as the German `po/de.po` string — the first "update"
+> below's claim holds up under re-verification, not just re-assertion.
+>
+> One correction to the first update's framing, detailed in
+> `test-parity.md`'s and `translation-parity.md`'s this-round sections:
+> `test/validate_packaging.rb` is real, passing coverage of the `msgfmt`
+> merge mechanism, but it is **not** the same thing as upstream's
+> `validate-desktop`/`validate-appdata` tests, which invoke
+> `desktop-file-validate`/`appstreamcli validate` — neither of which exists
+> anywhere in this repo's `flake.nix` or dev shell (checked directly this
+> round). So "closing" the desktop-launcher gap below is accurate for "is the
+> artifact produced and are its key fields right," not for "is it validated
+> the way upstream validates it." Recorded precisely rather than restated as
+> a clean close.
+>
+> The totals at the bottom of this document (2 gaps, 5 of 7 full parity)
+> still describe the pre-`8f97156` state and are kept for history; the
+> corrected totals are in the new section added at the end of this file.
+
 Cross-referenced against `.reports/component-identification.md` and
 `.reports/component-inventory.md` (the earlier agent's survey). Each row below
 is checked on all four axes: count, style, behaviour, text.
@@ -173,3 +197,21 @@ Verdict: **matches**.
 - Gaps found: **2** — the About dialog's metainfo-sourced text never
   translates (text axis), and the desktop-entry component is unverified by any
   check in the repository (component exists only as an un-run build step).
+
+## Totals, corrected this round (`b698135`)
+
+- Both gaps above are now genuinely closed, re-verified live and
+  independently this round (not re-read from the prior claim):
+  - About dialog text axis: `AboutDialog::AppData` runs `name`/`summary`/
+    current-release-notes through `Intl`; confirmed live under `LANGUAGE=de`.
+  - Desktop-entry component: `test/validate_packaging.rb` now runs the real
+    `msgfmt` merge and checks it, 16/16, live — **with the caveat above**
+    that it checks hand-picked fields, not the full schema
+    `desktop-file-validate`/`appstreamcli validate` enforce (neither tool is
+    present anywhere in this repo).
+- Components checked: 7, same as above. Full parity (all four axes) on the
+  original definition: 7 of 7. On the stricter reading that "verified the way
+  upstream verifies it" is part of parity for the desktop-entry component:
+  6 of 7 full, 1 partial (real coverage, narrower validator than upstream's).
+- Gaps found, corrected count: **0 outright, 1 partial** (desktop-entry
+  validation depth, detailed in `test-parity.md`).

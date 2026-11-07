@@ -1,5 +1,22 @@
 # Component identification — clairvoyant-rb
 
+> **Update (this round, fresh re-audit at `b698135`):** upstream unchanged —
+> re-confirmed `git rev-parse --short origin/main` is still `f4f3a60`. Port
+> moved from `2a8f5d2` to `b698135` ("Record port status") via `89ccac1`
+> ("Parity reports", the prior round's `.reports/` writeup). `git diff --stat
+> 2a8f5d2 b698135` touches only `.reports/accountability-ensurance.md`,
+> `.reports/component-identification.md`, `.reports/component-parity.md` and
+> the new `PORTING.md` — no `lib/`, `exe/`, `data/` or `.github/` file
+> changed. The widget inventory below still holds unchanged.
+>
+> One more thing worth recording: packaging checks now exist
+> (`test/validate_packaging.rb`, 16/16) that exercise `data/launcher.desktop.in`
+> and `data/metainfo.appdata.xml.in` directly — these are checks of
+> *installed-data artifacts*, not of a `lib/*.rb` widget class, so they do not
+> add a new row to the "Port files and the units in each" table below; they
+> are coverage of components this document already identified
+> (`data/gresource.xml` + `data/meson.build`), not new components.
+
 Upstream ref audited: `origin/main` @ `f4f3a605` ("ci: only mirror on pushes to
 main") — unchanged since the previous round, re-confirmed this round
 (`git rev-parse --short origin/main` still `f4f3a60`). Port ref audited:

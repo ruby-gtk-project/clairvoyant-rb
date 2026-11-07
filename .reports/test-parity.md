@@ -1,6 +1,50 @@
 # Test parity — clairvoyant-rb
 
-> **Update (this round):** `8f97156` added `test/validate_packaging.rb`, a
+> **Update (this round, fresh re-audit at `b698135`):** Independently re-ran
+> both scripts live rather than trusting the prior round's numbers:
+> `nix develop --command xvfb-run -a ruby test/drive_main_window.rb` → 27/27,
+> `DRIVE OK`; `nix develop --command ruby test/validate_packaging.rb` → 16/16,
+> `VALIDATE OK`. 27+16 = 43, matching this round's runtime-gate figure exactly.
+> `.github/workflows/drive.yml` exists and runs both on every push/PR,
+> confirmed by reading it. So far this matches the prior round's claim.
+>
+> **But two things the prior round's own update note got wrong or left
+> unreconciled, found by this round's independent check, not by re-reading the
+> claim:**
+>
+> 1. **This file contradicts itself and was never fixed.** The paragraph below
+>    says the "0-of-2" bijection "is now 2-of-2" — but the **Verdict** section
+>    further down this same file, untouched since before that note was
+>    written, still reads "**Bijection**: 0 of 2 upstream tests have a named
+>    port counterpart" and concludes "**Test parity: not established.**" A
+>    reader who skips the update note and reads only the verdict — the part of
+>    a report most readers go straight to — gets the pre-fix answer. A report
+>    whose own top note and own bottom verdict disagree is exactly the kind of
+>    drift `accountability-ensurance` is supposed to catch; it is caught here,
+>    now, and the stale verdict section below is left word-for-word as
+>    historical record, same as this file's own established practice for
+>    earlier superseded findings — but flagged here so no one reads past this
+>    note and trusts it.
+> 2. **"2-of-2" itself overstates what was built.** Upstream's two meson tests
+>    invoke real external validators: `desktop-file-validate` and
+>    `appstreamcli validate`. Checked this round, directly: `grep -n
+>    'desktop-file-validate\|appstreamcli' flake.nix` — no hits, anywhere, not
+>    in the build, not in the dev shell's `nativeBuildInputs`; and `nix
+>    develop --command which desktop-file-validate appstreamcli` — neither
+>    binary exists in the dev shell's `PATH` (only `msgfmt` resolved).
+>    `test/validate_packaging.rb` does run the real `msgfmt --desktop`/`--xml`
+>    merge (genuine, confirmed live) but then checks only the 8 fields its own
+>    source names per artifact (`Name` non-empty, `GenericName` ==
+>    `'Fortune Teller'`, etc.) — a hand-picked subset the port's author chose,
+>    not the full desktop-entry/AppStream schema `desktop-file-validate` and
+>    `appstreamcli validate` actually enforce (required-key completeness,
+>    AppStream XML-schema conformance, icon-theme lookups, and more). This is
+>    real, executed coverage of the *merge mechanism* — not a false green —
+>    but calling it "now 2-of-2" implies the upstream tests were ported
+>    one-for-one, and they were not: the actual validator tools are absent
+>    from this repository's closure entirely. Corrected verdict below.
+>
+> `8f97156` added `test/validate_packaging.rb`, a
 > direct port of upstream's two meson tests (`validate-desktop`,
 > `validate-appdata`): it runs the same `msgfmt --desktop`/`--xml` merges
 > `flake.nix`'s install phase does and asserts the merged desktop entry's and
@@ -112,10 +156,40 @@ report is required to draw.
   point a user at as "the tests", does not run — confirmed by executing it —
   and would report 0 examples even if its missing dependency were installed.
 
-**Test parity: not established.** Two upstream validation tests have no port
-counterpart and nothing in the repo checks for either property. The port's
-nominal test suite (`spec/`) is empty and its load path is broken in the
-project's own dev shell. The only suite that passes (`test/drive_main_window.rb`)
-is real and does pass, but runs only when a person remembers to type the
-command by hand — it is not continuously verified, and its 27/27 says nothing
-about the 2 upstream tests it does not cover.
+**Test parity: not established — superseded verdict, kept for history; see
+this file's top update note for both the fix and this round's correction.**
+Two upstream validation tests have no port counterpart and nothing in the
+repo checks for either property. The port's nominal test suite (`spec/`) is
+empty and its load path is broken in the project's own dev shell. The only
+suite that passes (`test/drive_main_window.rb`) is real and does pass, but
+runs only when a person remembers to type the command by hand — it is not
+continuously verified, and its 27/27 says nothing about the 2 upstream tests
+it does not cover.
+
+## Verdict, corrected this round (`b698135`)
+
+- `test/drive_main_window.rb` (27/27) and `test/validate_packaging.rb` (16/16)
+  both genuinely run and pass, live, and are both wired into
+  `.github/workflows/drive.yml` on push/PR — confirmed by reading the workflow
+  file and re-running both scripts independently this round.
+- `test/validate_packaging.rb` is a **real but partial** counterpart to
+  upstream's `validate-desktop`/`validate-appdata`: it runs the actual
+  `msgfmt` merge upstream's install phase runs, then checks 8 hand-picked
+  fields per artifact. It does **not** invoke `desktop-file-validate` or
+  `appstreamcli validate` — confirmed absent from both `flake.nix` and the dev
+  shell's `PATH` this round — so it does not enforce the full schema either of
+  those tools enforce. Call this **2 of 2 nominal counterparts exist and pass,
+  neither is the actual validator upstream's test runs.**
+- `rake spec` / `rake test` remain broken: re-run this round
+  (`bundle exec rake spec`), the failure is now "Don't know how to build task
+  'spec'" (the task simply doesn't exist, since `8f97156` deleted the empty
+  `spec/` scaffolding and no RSpec task is registered without `kettle-dev`) —
+  a different error from the prior round's `LoadError`, same underlying fact:
+  the entry point the gemspec, `Rakefile` banner and dev-shell banner all
+  point at as "the tests" does not run, and isn't exercised by
+  `.github/workflows/drive.yml` either.
+- **Test parity: still not fully established**, but closer than the stale
+  verdict above says and not as close as this file's own prior update note
+  claimed. The real gap left is upstream's actual schema-validator tools
+  having no equivalent anywhere in this repo, and `rake spec`/`rake test`
+  being permanently broken entry points nothing in CI catches.

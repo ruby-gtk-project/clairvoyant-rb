@@ -1,6 +1,32 @@
 # Translation parity — clairvoyant-rb
 
-> **Update (this round):** the metainfo-sourced strings this report flags as
+> **Update (this round, fresh re-audit at `b698135`):** independently
+> re-verified the fix below myself rather than re-reading the prior round's
+> claim — ran, live, under this dev shell with `LANGUAGE=de`:
+> `AboutDialog.new.build.comments` → `"Stelle Fragen, bekomme übersinnliche
+> Antworten"` (the German `po/de.po` translation, not the English source).
+> `application_name` also resolved correctly. This confirms the fix is real,
+> not a stale or re-asserted claim.
+>
+> **One clarification this round adds, not previously stated:**
+> `AboutDialog::AppData#release_notes` only ever extracts the `<release>`
+> whose `version` attribute matches the running build's `Config::VERSION` —
+> so of the ~40 historical release-note msgids in the `.pot`, only the
+> *current* version's notes are ever reachable at runtime. This is **not a
+> port gap**: upstream's own `Adw.AboutWindow.from_appdata` behaves
+> identically — it only ever displays release notes for the version matching
+> the running build, never the full history. Noted here so a later reader
+> does not mistake "39 of 40 historical release-note strings have no runtime
+> consumer" for a port-specific failure; it is the same in both trees.
+>
+> Desktop-entry strings (`GenericName`, `Comment`, `Keywords`) were
+> re-confirmed this round via a live run of `test/validate_packaging.rb`
+> (16/16) — the `msgfmt --desktop` merge genuinely produces a localized
+> `Comment[xx]` key. See `test-parity.md`'s this-round update for the caveat
+> that this checks the merge, not the full desktop-file schema.
+>
+> **Prior round's update, kept verbatim:** the metainfo-sourced strings this
+> report flags as
 > never reaching the screen (`name`, `summary`, release notes) were fixed in
 > `8f97156`: `AboutDialog::AppData` now includes `Intl` and runs those fields
 > through the same gettext catalogue the 31 source-literal strings already
@@ -124,8 +150,32 @@ mechanism to ever surface 68 of the 99 keys those catalogues carry.
   that has any runtime consumer at all; the rest have no consumer to even
   attempt translating.
 
-**Translation parity: not established.** This is not a cosmetic gap — it is
-68 of upstream's 99 translator-contributed strings, covering every language
-in `po/LINGUAS`, that the port can never display translated, regardless of
-locale, regardless of whether `.mo` files are compiled, and regardless of
-whether the app is run from source or from the Nix-built package.
+**Translation parity: not established — superseded by this round's fix, kept
+for history.** This section predates `8f97156`; the 68-unreachable figure is
+no longer accurate. See the corrected verdict below.
+
+## Verdict, corrected this round (`b698135`)
+
+- Of the 68 keys this section found unmarked by `_()`: `name` and `summary`
+  (metainfo) now run through `Intl` inside `AboutDialog::AppData` and are
+  **confirmed live this round** to translate (German `comments` verified
+  directly, independent of any prior claim). The current build's release
+  notes translate the same way — by design, matching upstream, only the
+  current version's notes are ever shown in either tree (see this file's top
+  update note).
+- Desktop-entry keys (`GenericName`, `Comment`, `Keywords`) are produced
+  correctly by the real `msgfmt --desktop` merge, confirmed live via
+  `test/validate_packaging.rb` — but see `test-parity.md` for why that check
+  is narrower than upstream's actual `desktop-file-validate` validator.
+- Still genuinely unreachable: the ~39 non-current historical release notes
+  (not a gap — matches upstream) and anything in the `.pot` neither sourced
+  from a literal `_()` call nor from the metainfo/desktop templates this
+  round's fix covers — this audit found none such; the 68 were fully
+  accounted for by the metainfo + desktop buckets.
+- **Translation parity: materially closed.** All 196 languages ship
+  unchanged, the 31 source-literal keys translate (confirmed live), and the
+  metainfo/desktop keys that have any runtime or build-time consumer at all
+  now translate too (confirmed live, independently, this round). The
+  remaining caveat is `test-parity.md`'s: the desktop/metainfo merge is
+  verified against hand-picked fields, not the full external validator
+  upstream's test suite runs.

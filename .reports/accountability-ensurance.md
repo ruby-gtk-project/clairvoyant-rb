@@ -1,6 +1,56 @@
 # Accountability ensurance — clairvoyant-rb
 
-> **Update (this round):** re-ran the grep below fresh (clean, same result).
+> **Second update (this round, fresh re-audit at `b698135`):** re-ran the
+> grep below fresh again (clean, same result, now also covering the new
+> `PORTING.md`). Independently re-verified live, myself, rather than
+> re-reading the prior round's claim: `test/drive_main_window.rb` (27/27),
+> `test/validate_packaging.rb` (16/16), and the About dialog's `comments`
+> translating to German under `LANGUAGE=de`. All hold up.
+>
+> **Two new findings this round, in the other direction from last round's
+> ("drifted but not excused") finding — these are claims that were actively
+> wrong, not just stale:**
+>
+> 1. **`test-parity.md` contradicted itself and nobody caught it before this
+>    round.** Its own top update note (written last round) says the
+>    upstream-test bijection "is now 2-of-2." Its own **Verdict** section,
+>    sixty-odd lines further down, unedited since before that note was
+>    written, says "**Bijection**: 0 of 2" and "**Test parity: not
+>    established.**" Both sentences were sitting in the same file, visible to
+>    anyone who read past the first paragraph, since `89ccac1` ("Parity
+>    reports") — the commit that *added* the "now 2-of-2" note without
+>    touching the verdict it contradicts. A reader who reads only the verdict
+>    section — the part most people jump to — would have been told the
+>    opposite of what the note at the top claims. This is not a gap being
+>    excused; it is a false claim (the top note) left standing next to the
+>    true one (the verdict) with neither reconciled. Fixed this round in
+>    `test-parity.md` itself: the verdict section is now explicitly marked
+>    superseded, and a corrected verdict is appended after it.
+> 2. **The "now 2-of-2" claim that caused the contradiction above is itself
+>    overstated**, independent of the self-contradiction. Checked this round,
+>    directly, not inferred: `grep -n 'desktop-file-validate\|appstreamcli'
+>    flake.nix` returns nothing, and `nix develop --command which
+>    desktop-file-validate appstreamcli` finds neither binary anywhere in the
+>    dev shell's `PATH` (only `msgfmt` resolves). Upstream's two meson tests
+>    (`validate-desktop`, `validate-appdata`) run exactly those two tools.
+>    `test/validate_packaging.rb` runs the real `msgfmt` merge (genuine) but
+>    then checks 8 fields its own author picked, not what either real
+>    validator actually enforces. Calling this "2-of-2" — implying upstream's
+>    tests were ported — overstates what was built: the actual validator
+>    tools have no port-side equivalent at all, anywhere in this repository.
+>    This is the same failure pattern this skill is named for — a claim of
+>    finished, equivalent work that doesn't hold up to what the claim implies
+>    — just found in a `.reports/` file instead of a commit message this time.
+>    Recorded precisely (not excused) in `test-parity.md` and
+>    `component-parity.md`'s corrected sections.
+>
+> Neither finding was caught by last round's accountability pass, which
+> focused on whether a *gap* was being excused and correctly found none — but
+> did not check whether a *fix* being claimed was claimed accurately. That is
+> this round's addition to the standing instruction: verify not just "is a
+> gap excused" but "is a claimed fix as complete as it says it is."
+>
+> **First update (prior round):** re-ran the grep below fresh (clean, same result).
 > Independently re-executed both commands this document's own prior finding
 > rested on — `nix develop --command xvfb-run -a ruby test/drive_main_window.rb`
 > (27/27, `DRIVE OK`) and `nix develop --command ruby test/validate_packaging.rb`
@@ -49,11 +99,14 @@ $ grep -rniE "todo|fixme|not implemented|for now|in a future|out of scope|
 
 - `lib/`, `exe/`: **no matches.** No `TODO`, `FIXME`, "not implemented", "for
   now", or any deferral language anywhere in the port's source.
-- `PORTING.md`: **does not exist** in this repository at all — there is no
-  document of this name to audit, which also means no agent has been able to
-  cite it as authority for a skip (the specific failure mode this skill is
-  named for), but it also means the port's own "where things live" navigation
-  document is missing.
+- `PORTING.md`: **now exists** (added in `b698135`, after this sentence was
+  first written when it did not) — re-run this round: **no matches** of the
+  grep's excuse-language pattern inside it either. It states both remaining
+  gaps (translation coverage, test parity) plainly, as measurements with
+  `.reports/` citations, not as justifications — matches this skill's
+  requirement directly, and gives the port the "where things live" navigation
+  document the original sentence here noted was missing. That original
+  observation is superseded, not wrong for its own time.
 - `.reports/component-parity.md` (this audit's own output): one hit —
   `Adwaita::Application is unusable in the bindings` is cited as a
   **correspondence** rather than a gap, per the `component-parity` skill's own
@@ -134,7 +187,8 @@ this audit endorsed.
 ## Verdict
 
 - No `TODO`/`FIXME`/deferral language in the port's source.
-- No `PORTING.md` exists to be cited as false authority.
+- `PORTING.md` now exists (`b698135`) and carries no excuse language either;
+  it states its two open gaps as measurements, with citations, not reasons.
 - The pre-existing `.reports/component-inventory.md`'s "not a gap" claims hold
   up on independent re-check and are correctly scoped.
 - Two real gaps — About-dialog metainfo translation, and the desktop-entry
@@ -162,3 +216,26 @@ this audit endorsed.
   `component-identification.md`, and had not been named in any report before
   now — not an excuse, just a thing nobody had looked at closely enough to
   write down until this round.
+
+## This round's verdict (`b698135`)
+
+- All of the prior round's "this round" claims above were re-verified live
+  by me, independently, not re-read: `test/drive_main_window.rb` 27/27,
+  `test/validate_packaging.rb` 16/16, About dialog German translation
+  confirmed. They hold up.
+- Found one self-contradiction (`test-parity.md`'s top note vs. its own
+  verdict section) and one overstated fix claim ("now 2-of-2," when the
+  actual validator tools upstream's tests invoke — `desktop-file-validate`,
+  `appstreamcli validate` — exist nowhere in this repo's closure). Both are
+  detailed above and fixed in `test-parity.md` and `component-parity.md`
+  directly, not just noted here.
+- `rake spec`/`rake test` remain broken (confirmed by re-running this round;
+  the error text changed from `LoadError` to "Don't know how to build task
+  'spec'" because `8f97156` deleted the empty `spec/` directory, but the
+  underlying fact — the Rakefile's own printed banner advertises a task that
+  does not run — is unchanged and still not caught by any CI workflow).
+- **Overall: no excuse language anywhere, but the port's own `.reports/` had,
+  until this round, one internally contradictory claim and one overstated
+  one. Neither was a lie about a gap's existence — both were about how fully
+  a real fix closed it. Fixed in place this round; this file records that
+  they existed and were found by re-running things, not by re-reading claims.**
