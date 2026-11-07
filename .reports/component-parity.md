@@ -3,6 +3,18 @@
 Cross-referenced against `.reports/component-identification.md` and
 `.reports/component-inventory.md` (the earlier agent's survey). Each row below
 is checked on all four axes: count, style, behaviour, text.
+> **Update (this round):** the About-dialog gap below was closed in
+> `8f97156` ("Translate the About window's AppStream strings and validate
+> packaging") — `AppData` now includes `Intl` and runs `name`, `summary` and
+> each release note's `<p>`/`<li>` through the same catalogue the rest of the
+> app uses. The desktop-launcher gap was closed in the same commit by
+> `test/validate_packaging.rb`, which merges and asserts the desktop entry
+> and AppStream component the way `flake.nix`'s install phase does. Re-run
+> this round: `test/drive_main_window.rb` 27/27 and
+> `test/validate_packaging.rb` 16/16, both passing live. The row-by-row
+> detail below predates both fixes and is kept for its description of what
+> was wrong; treat its two "GAP" verdicts as historical, not current.
+
 
 ## Application (`src/Application.vala` → `lib/application.rb`)
 

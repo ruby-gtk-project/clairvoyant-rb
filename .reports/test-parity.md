@@ -1,5 +1,16 @@
 # Test parity — clairvoyant-rb
 
+> **Update (this round):** `8f97156` added `test/validate_packaging.rb`, a
+> direct port of upstream's two meson tests (`validate-desktop`,
+> `validate-appdata`): it runs the same `msgfmt --desktop`/`--xml` merges
+> `flake.nix`'s install phase does and asserts the merged desktop entry's and
+> AppStream component's required fields. It also removed the empty, broken
+> `spec/` scaffolding this report flags below. Re-run this round, both live:
+> `test/drive_main_window.rb` 27/27, `test/validate_packaging.rb` 16/16. Both
+> are now wired into `.github/workflows/drive.yml`, which runs on every push
+> and PR. The upstream-test-count analysis below predates this fix; the
+> bijection it describes as 0-of-2 is now 2-of-2.
+
 ## Step 1 — census the upstream suite
 
 ```

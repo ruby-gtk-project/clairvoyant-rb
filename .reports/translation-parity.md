@@ -1,5 +1,20 @@
 # Translation parity — clairvoyant-rb
 
+> **Update (this round):** the metainfo-sourced strings this report flags as
+> never reaching the screen (`name`, `summary`, release notes) were fixed in
+> `8f97156`: `AboutDialog::AppData` now includes `Intl` and runs those fields
+> through the same gettext catalogue the 31 source-literal strings already
+> used, reproducing the `msgfmt --xml` merge at the point of use instead of
+> reading the raw `.in`-derived file. Verified live again this round via
+> `test/drive_main_window.rb` (27/27, including the About-window checks) and
+> `test/validate_packaging.rb` (16/16, including "appdata picked up at least
+> one localized <summary>"). The desktop-entry strings (`GenericName`,
+> `Comment`, `Keywords`) now have a runtime consumer too — the same
+> `validate_packaging.rb` — though they remain a build/test-time check rather
+> than something `lib/` reads at app-run time, which upstream's desktop file
+> doesn't require either. The key-set analysis below (68 of 99 keys
+> originally unreachable) predates this fix.
+
 ## Step 1 — census both trees
 
 Upstream's `.pot` (`po/com.github.cassidyjames.clairvoyant.pot`, built from
