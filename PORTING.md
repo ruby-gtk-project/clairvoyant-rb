@@ -56,8 +56,7 @@ nix develop --command xvfb-run -a ruby test/drive_main_window.rb
 ```
 
 `drive_ok=true`, 27 passed / 0 failed, 4 components covered (Application,
-MainWindow, FortuneLabel, AboutDialog). Also runs via `rake test` (and its
-`rake spec` alias) now — see Done, above.
+MainWindow, FortuneLabel, AboutDialog).
 
 Packaging validation, also re-run live this session:
 
@@ -65,9 +64,23 @@ Packaging validation, also re-run live this session:
 nix develop --command ruby test/validate_packaging.rb
 ```
 
-`VALIDATE OK`, 18 of 18 checks passed — now including the real
-`desktop-file-validate` and `appstreamcli validate` calls, not only the
-hand-picked field checks.
+`VALIDATE OK`, 18 of 18 checks passed (desktop entry + metainfo, including
+the real `desktop-file-validate` and `appstreamcli validate` calls, not only
+hand-picked fields) — this is the 5th covered component (desktop launcher +
+metainfo), on top of the 4 the drive script exercises.
+
+Both are also re-run live this session via the single entry point the
+gemspec/Rakefile/dev-shell banner advertise:
+
+```
+nix develop --command xvfb-run -a rake test     # == rake spec (aliased)
+```
+
+`rake test` runs `test/validate_packaging.rb` (18/18) then
+`test/drive_main_window.rb` (27/27) under `xvfb-run` and exits 0. `rake spec`
+aliases to the same task and was independently re-run live with the same
+result. Combined: **45 passed / 0 failed** across the two scripts, 5
+components covered; the validate step alone is 18 passed / 0 failed.
 
 ## Not started
 
