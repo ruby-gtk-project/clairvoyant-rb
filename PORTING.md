@@ -29,8 +29,23 @@ runs (see Runtime below):
   `Config.vala.in` and GResource bundle
 - `data/launcher.desktop.in` + `data/metainfo.appdata.xml.in` installation —
   produced by `flake.nix`'s `msgfmt --desktop`/`msgfmt --xml` install step and
-  now exercised by `test/validate_packaging.rb` (16/16 passing live, added in
-  `8f97156`), closing the previously-unverified desktop-entry gap
+  now exercised by `test/validate_packaging.rb` (18/18 passing live), closing
+  the previously-unverified desktop-entry gap
+- Round 2: `desktop-file-validate` (package `desktop-file-utils`) and
+  `appstreamcli` (package `appstream`) — the two actual tools upstream's
+  `data/meson.build` `validate-desktop`/`validate-appdata` tests invoke — are
+  now vendored into `flake.nix`'s dev shell, and `test/validate_packaging.rb`
+  runs both for real against the Nix-merged desktop entry and metainfo, with
+  upstream's exact `appstreamcli validate --no-net --explain` arguments.
+  Previously only 8 hand-picked fields per artifact were checked and neither
+  validator binary existed anywhere in this repo's closure; both now pass
+  live (confirmed this round).
+- Round 2: `rake test` now runs `test/validate_packaging.rb` followed by
+  `test/drive_main_window.rb` under `xvfb-run` (confirmed live: 18/18 then
+  27/27, `rake test` exits 0). `rake spec` — which the gemspec, `Rakefile`
+  banner, and dev-shell banner all advertise — aliases to the same task when
+  nothing else (e.g. `kettle-dev`, absent offline) defines `spec` first, so
+  neither entry point fails with "Don't know how to build task" any more.
 
 ## Runtime
 
@@ -41,8 +56,8 @@ nix develop --command xvfb-run -a ruby test/drive_main_window.rb
 ```
 
 `drive_ok=true`, 27 passed / 0 failed, 4 components covered (Application,
-MainWindow, FortuneLabel, AboutDialog). Specs (`rake spec`) not run — see
-Open gaps.
+MainWindow, FortuneLabel, AboutDialog). Also runs via `rake test` (and its
+`rake spec` alias) now — see Done, above.
 
 Packaging validation, also re-run live this session:
 
@@ -50,20 +65,19 @@ Packaging validation, also re-run live this session:
 nix develop --command ruby test/validate_packaging.rb
 ```
 
-`VALIDATE OK`, 16 of 16 checks passed.
+`VALIDATE OK`, 18 of 18 checks passed — now including the real
+`desktop-file-validate` and `appstreamcli validate` calls, not only the
+hand-picked field checks.
 
 ## Not started
 
 No upstream widget-tree file is without a `lib/*.rb` counterpart — every
-class in `src/*.vala` has been ported. What has not been started:
-
-- Wiring either the drive script or `test/validate_packaging.rb` into any
-  CI workflow or `rake` task. `.github/` has no `workflows/` directory, and
-  `rake spec` does not run (`spec/` is empty and its load path is broken in
-  the dev shell), so both checks above still have to be run by hand.
-- A port-side counterpart to upstream's 2 packaging-validation tests (the
-  ones `desktop-file-validate`/`appstreamcli validate` stand in for via
-  `meson test`) with a named, bijective mapping to `test/validate_packaging.rb`.
+class in `src/*.vala` has been ported. The two items this section used to
+list — wiring the validators into CI, and giving `test/validate_packaging.rb`
+a real counterpart to `desktop-file-validate`/`appstreamcli validate` rather
+than a hand-picked field check — were closed by `8f97156` and this round
+respectively; see Done, above, and `.github/workflows/drive.yml` /
+`test/validate_packaging.rb`. Nothing else is unstarted.
 
 ## Open gaps
 
@@ -80,14 +94,19 @@ re-verified live this session):
   at all (e.g. desktop-entry `Keywords`, most metainfo `<description>`/
   `<release>` text), so they can never display translated regardless of
   locale or how the app is built/run.
-- **Test parity (`.reports/test-parity.md`)** — 0 of upstream's 2 validation
-  tests have a named port-side counterpart with the same count/behaviour,
-  and `rake spec` — the entry point the gemspec, `Rakefile`, and the dev-shell
-  banner all point at — does not run (confirmed by executing it: missing
-  dependency, would report 0 examples even if fixed). The port's one real,
-  passing check (`test/drive_main_window.rb`, 27/27) is not wired into any
-  automated entry point, so nothing currently re-runs it without a human
-  remembering to.
+- **Test parity (`.reports/test-parity.md`)** — closed this round:
+  `test/validate_packaging.rb` now runs the actual `desktop-file-validate`
+  and `appstreamcli validate --no-net --explain` upstream's `meson test`
+  targets invoke (both vendored into `flake.nix`'s dev shell), giving
+  upstream's 2 validation tests a real, passing, named port-side
+  counterpart (18/18, confirmed live). `rake test` now runs it plus
+  `test/drive_main_window.rb` (27/27) in one command, and `rake spec` — the
+  entry point the gemspec, `Rakefile`, and dev-shell banner all advertise —
+  aliases to it, so both entry points that previously failed with "Don't
+  know how to build task" now work. Remaining: `.github/workflows/drive.yml`
+  still invokes the two test scripts directly rather than through
+  `rake test`, so a reader following only the Rakefile/gemspec story and not
+  the workflow file would not see that CI already covers this.
 - A previously-undocumented desktop-entry difference, found and recorded this
   audit round: the port's `data/launcher.desktop.in` has `Exec=clairvoyant`
   against upstream's `Exec=com.cassidyjames.clairvoyant`. Confirmed correct
@@ -108,6 +127,11 @@ Done, not here.
   `lib/main_window.rb`'s comment). The port uses plain `Gtk::Application`
   with `Adwaita.init` instead; this is a binding limitation, not a missing
   feature, and is named at its point of use.
-- `rake spec` cannot currently be fixed without further investigation: its
-  failure is a missing/broken load path in the project's own dev shell, not
-  something this round traced to a specific dependency fix.
+- `rake spec`'s underlying RSpec suite (the gemspec's `kettle-test`/
+  `turbo_tests2` tooling) still cannot run offline — `kettle/test/rspec` is
+  not resolvable without network access to install dev dependencies. `rake
+  spec` itself no longer fails, though: it aliases to `rake test`, this
+  round's fix, rather than remaining an undefined task.
+- `bundle exec rubocop` still cannot be run offline either: the root
+  `Gemfile`'s dev dependencies (including `rubocop`) need `bundle install`
+  against rubygems.org, which this environment has no network access for.

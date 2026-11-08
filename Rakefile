@@ -170,3 +170,31 @@ rescue LoadError
     warn("NOTE: stone_checksums isn't installed, or is disabled for #{RUBY_VERSION} in the current environment")
   end
 end
+
+### PORT TEST TASKS
+# `rake spec`'s RSpec suite needs kettle-test/turbo_tests2, which this gem's
+# development dependencies pull in but which this offline environment cannot
+# resolve — and spec/ itself was deleted (8f97156) because it held zero
+# examples. Without kettle-dev loaded (the common offline case — see the
+# `require "kettle/dev"` rescue above), nothing above defines a `spec` or
+# `test` task at all, so both commands the gemspec, this Rakefile's own
+# banner and the dev-shell banner advertise as "the tests" fail with
+# "Don't know how to build task". Define a real `test` task that runs this
+# port's own scripts, and point `spec` at it when nothing else claims `spec`.
+desc "Run the port's own test scripts (validate_packaging + drive_main_window)"
+task :test do
+  ruby_bin = RbConfig.ruby
+  sh(ruby_bin, "test/validate_packaging.rb")
+  # The main-window driver opens a real GTK window and needs a display;
+  # xvfb-run supplies a virtual one, as the dev-shell banner documents.
+  if system("which xvfb-run > /dev/null 2>&1")
+    sh("xvfb-run", "-a", ruby_bin, "test/drive_main_window.rb")
+  else
+    warn("NOTE: xvfb-run not found on PATH — skipping test/drive_main_window.rb. Run inside `nix develop`.")
+  end
+end
+
+unless Rake::Task.task_defined?(:spec)
+  desc "Alias for `rake test` (the RSpec suite this gemspec advertises needs kettle-test/turbo_tests2, unavailable offline)"
+  task spec: :test
+end

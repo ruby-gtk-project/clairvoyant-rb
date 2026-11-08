@@ -6,17 +6,21 @@
 #
 #   ruby test/validate_packaging.rb
 #
-# Needs `msgfmt` (the `gettext` package), which the dev shell already carries
-# as a nativeBuildInput for exactly this merge. No GTK and no display are
-# needed, so this does not go through xvfb-run.
+# Needs `msgfmt` (the `gettext` package) plus the actual validator binaries
+# upstream's meson test() targets invoke, `desktop-file-validate` (package
+# `desktop-file-utils`) and `appstreamcli` (package `appstream`). The dev
+# shell carries all three. No GTK and no display are needed, so this does
+# not go through xvfb-run.
 #
 # It runs the same two merges flake.nix's installPhase does —
 # `msgfmt --desktop` on data/launcher.desktop.in and `msgfmt --xml` on
-# data/metainfo.appdata.xml — against a temporary output, then checks the
-# merged result the way upstream's validate-desktop (desktop-file-validate)
-# and validate-appdata (appstreamcli validate) checks would: that the keys a
-# desktop entry and an AppStream component must carry are present and hold
-# the values the source templates set.
+# data/metainfo.appdata.xml — against a temporary output, runs the real
+# `desktop-file-validate`/`appstreamcli validate` against the merged result
+# (the same tools and the same command line as upstream's validate-desktop
+# and validate-appdata meson tests), and additionally checks that specific
+# keys a desktop entry and an AppStream component must carry hold the values
+# the source templates set — a field-level smoke check on top of, not
+# instead of, the real schema validators.
 
 require 'open3'
 require 'tmpdir'
@@ -50,6 +54,10 @@ def run!(*cmd)
   stdout
 end
 
+def tool_on_path?(name)
+  system("which #{name} > /dev/null 2>&1")
+end
+
 # Upstream's data/metainfo.appdata.xml.in's own <id>, read the same way
 # flake.nix's installPhase finds the AppStream id to name the merged files
 # after.
@@ -79,6 +87,13 @@ Dir.mktmpdir do |tmp|
     '-o',
     desktop_path,
   )
+
+  check('desktop-file-validate accepts the merged .desktop (upstream\'s validate-desktop test)') do
+    raise 'desktop-file-validate not found on PATH' unless tool_on_path?('desktop-file-validate')
+
+    run!('desktop-file-validate', desktop_path)
+    true
+  end
 
   entry = parse_desktop_entry(File.read(desktop_path))
 
@@ -112,6 +127,15 @@ Dir.mktmpdir do |tmp|
     '-o',
     appdata_path,
   )
+
+  check('appstreamcli validate accepts the merged metainfo (upstream\'s validate-appdata test)') do
+    raise 'appstreamcli not found on PATH' unless tool_on_path?('appstreamcli')
+
+    # Exactly upstream's data/meson.build validate-appdata args:
+    # `appstreamcli validate --no-net --explain <metainfo_file>`.
+    run!('appstreamcli', 'validate', '--no-net', '--explain', appdata_path)
+    true
+  end
 
   merged = File.read(appdata_path)
 

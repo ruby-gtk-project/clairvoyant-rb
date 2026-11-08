@@ -1,6 +1,51 @@
 # Test parity — clairvoyant-rb
 
-> **Update (this round, fresh re-audit at `b698135`):** Independently re-ran
+> **Update (round 2, this round):** Both gaps this file's round-1 correction
+> named as real and unclosed are now closed, verified live:
+>
+> 1. **The actual validators now exist and run.** `desktop-file-utils`
+>    (`desktop-file-validate`) and `appstream` (`appstreamcli`) are now
+>    vendored into `flake.nix`'s `devShells.default.packages` — confirmed by
+>    reading the file and by `nix develop --command which desktop-file-validate
+>    appstreamcli`, both resolving. `test/validate_packaging.rb` now runs both
+>    for real against the Nix-merged artifacts, with upstream's own
+>    `data/meson.build` argument lists reproduced exactly
+>    (`desktop-file-validate <merged .desktop>`;
+>    `appstreamcli validate --no-net --explain <merged metainfo>`), confirmed
+>    by reading `origin/main:data/meson.build`. Live re-run this round:
+>    `nix develop --command ruby test/validate_packaging.rb` → **18 of 18
+>    checks passed, VALIDATE OK** (the two new checks plus the prior 16
+>    hand-picked field checks, kept as an additional smoke layer, not a
+>    replacement). This closes the "2-of-2 nominal, 0-of-2 actual validator"
+>    gap the round-1 correction below identified.
+> 2. **`rake test` and `rake spec` both run now.** The Rakefile defines a
+>    `test` task that runs `test/validate_packaging.rb` then
+>    `test/drive_main_window.rb` under `xvfb-run`, and aliases `spec` to it
+>    when nothing else (`kettle-dev`, absent offline) already defines `spec`.
+>    Live re-run this round: `nix develop --command rake test` → 18/18 then
+>    27/27, exit 0; `nix develop --command rake spec` → same, exit 0. Neither
+>    fails with "Don't know how to build task" any more.
+>
+> Not closed: `.github/workflows/drive.yml` still calls the two test scripts
+> directly rather than through `rake test`; functionally equivalent (both
+> scripts still run on every push/PR) but a reader checking only "does CI run
+> `rake test`" would get a wrong no. `bundle exec rubocop` still cannot run in
+> this offline environment (`bundler: command not found: rubocop` — the root
+> Gemfile's dev dependencies need network access to install, confirmed this
+> round), and the RSpec suite underlying `rake spec` still cannot load
+> (`kettle/test/rspec` unresolvable offline) — `rake spec` now runs *something
+> real* (this port's own scripts) rather than failing outright, which is this
+> round's fix, but it is not upstream's advertised RSpec runner.
+>
+> **Test parity, round 2: established for the schema-validation half** (both
+> upstream `meson test` targets now have a port counterpart that runs the
+> same tool with the same arguments and passes) **and for the broken-entry-point
+> half** (`rake test`/`rake spec` both now execute real, passing checks). The
+> remaining items are offline-environment limitations (`rubocop`, RSpec/
+> kettle-test), not missing port work, and are named in this round's
+> `remaining` list rather than claimed closed.
+
+> **Update (round 1, fresh re-audit at `b698135`):** Independently re-ran
 > both scripts live rather than trusting the prior round's numbers:
 > `nix develop --command xvfb-run -a ruby test/drive_main_window.rb` → 27/27,
 > `DRIVE OK`; `nix develop --command ruby test/validate_packaging.rb` → 16/16,

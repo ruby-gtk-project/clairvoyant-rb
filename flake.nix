@@ -248,6 +248,11 @@
             pkgs.xvfb-run
             pkgs.gsettings-desktop-schemas
             pkgs.adwaita-icon-theme
+            # The actual validators upstream's data/meson.build `test()`
+            # targets invoke (validate-desktop, validate-appdata).
+            # test/validate_packaging.rb shells out to both.
+            pkgs.desktop-file-utils
+            pkgs.appstream
           ] ++ gtkStack;
 
           # Icons, GSettings schemas and the GTK portal all resolve through
