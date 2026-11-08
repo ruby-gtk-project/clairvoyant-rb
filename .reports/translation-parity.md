@@ -1,6 +1,27 @@
 # Translation parity — clairvoyant-rb
 
-> **Update (this round, fresh re-audit at `b698135`):** independently
+> **Update (round 3, this round, `2f6643e`):** re-ran the German About-dialog
+> check independently again — `AboutDialog.new.build.comments` under
+> `LANGUAGE=de` still returns `"Stelle Fragen, bekomme übersinnliche
+> Antworten"`, confirmed live. The caveat the prior round's note attached to
+> the desktop-entry/metainfo keys — "the desktop/metainfo merge is verified
+> against hand-picked fields, not the full external validator upstream's test
+> suite runs" — no longer holds: `test/validate_packaging.rb` now runs the
+> real `desktop-file-validate`/`appstreamcli validate` binaries (vendored into
+> `flake.nix` this round), confirmed live, 18/18. This does not change any
+> message-count or key-set figure in this file — it only removes a caveat on
+> how thoroughly the one runtime consumer of those keys is checked. See
+> `test-parity.md`'s round-3 note for the detail; carried here only because
+> this file quoted the now-stale caveat.
+>
+> Key-set figures below (31 marked, 68 unmarked of 99 upstream msgids) were
+> independently re-counted this round and are unchanged:
+> `git show origin/main:po/com.github.cassidyjames.clairvoyant.pot | grep -c
+> '^msgid "[^"]'` → 99; the port's own `msgid-census.sh` over `lib exe` → 31
+> distinct marked keys (confirmed via the skill's own census script, not
+> re-read from a prior count).
+
+> **Update (prior round, re-audit at `b698135`):** independently
 > re-verified the fix below myself rather than re-reading the prior round's
 > claim — ran, live, under this dev shell with `LANGUAGE=de`:
 > `AboutDialog.new.build.comments` → `"Stelle Fragen, bekomme übersinnliche

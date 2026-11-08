@@ -1,6 +1,20 @@
 # Component identification — clairvoyant-rb
 
-> **Update (this round, fresh re-audit at `b698135`):** upstream unchanged —
+> **Update (round 3, this round, `2f6643e`):** re-confirmed
+> `git rev-parse --short origin/main` is still `f4f3a60` — upstream unchanged.
+> `git diff --stat b698135 2f6643e` touches `.github/workflows/drive.yml`,
+> `.reports/test-parity.md`, `PORTING.md`, `Rakefile`, `flake.nix` and
+> `test/validate_packaging.rb` — no `lib/`, `exe/` or `data/` file changed, so
+> the widget inventory below still holds unchanged, same as every prior
+> round. The change this round (vendoring `desktop-file-validate`/
+> `appstreamcli` and wiring `rake test`/`rake spec`) is build/test
+> infrastructure, not a new or changed component — it gives the existing
+> "desktop entry installation" item (`data/gresource.xml` + `data/meson.build`
+> section, below) its first real-validator check rather than adding a unit.
+> See `component-parity.md`'s round-4 update and `test-parity.md`'s round-3
+> update for what that closes.
+
+> **Update (prior round, re-audit at `b698135`):** upstream unchanged —
 > re-confirmed `git rev-parse --short origin/main` is still `f4f3a60`. Port
 > moved from `2a8f5d2` to `b698135` ("Record port status") via `89ccac1`
 > ("Parity reports", the prior round's `.reports/` writeup). `git diff --stat

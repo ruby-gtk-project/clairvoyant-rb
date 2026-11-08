@@ -1,6 +1,55 @@
 # Accountability ensurance — clairvoyant-rb
 
-> **Second update (this round, fresh re-audit at `b698135`):** re-ran the
+> **Third update (this round, fresh re-audit at `2f6643e`):** the exact
+> failure this skill is named for recurred in this repository's own
+> `.reports/`, one round after the second update below described finding and
+> fixing an instance of it. Found by re-running things, not by re-reading any
+> prior claim:
+>
+> 1. **This round's port commit (`2f6643e`, "Vendor desktop-file-validate/
+>    appstreamcli and wire rake test/spec") genuinely closes the gap the
+>    second update below calls "overstated."** Confirmed live:
+>    `grep -n 'desktop-file-validate\|appstreamcli' flake.nix` now hits
+>    (`pkgs.appstream`, `pkgs.desktop-file-utils` in the dev shell), both
+>    binaries resolve under `nix develop`, `test/validate_packaging.rb` runs
+>    them for real with upstream's own argument lists (18/18, live), and
+>    `rake test`/`rake spec` both run and pass (18/18 then 27/27, exit 0).
+>    This is a real fix, backed by a test in the same commit — same standard
+>    this file applied to `8f97156` previously.
+> 2. **But `2f6643e` only touched `.reports/test-parity.md`, `PORTING.md`,
+>    `Rakefile`, `flake.nix` and `test/validate_packaging.rb` — not
+>    `component-parity.md` or this file.** Both of those still read, at the
+>    time this round's audit began, "neither of which exists anywhere in this
+>    repo's flake.nix or dev shell" and "the actual validator tools have no
+>    port-side equivalent at all, anywhere in this repository." Those
+>    sentences were true of `b698135`. They were **false** of `2f6643e`, the
+>    very commit whose diff this file's own second update (below) is
+>    discussing — because the fix landed in a later commit this file was
+>    never re-run against. A reader of either file, until this edit, would
+>    have been told a real fix did not exist.
+> 3. **`test-parity.md` repeated its own previously-identified bug.** Its round
+>    2 top note (added by `89ccac1`, the commit the second update below
+>    describes fixing) said the file's self-contradiction — a top note saying
+>    "fixed" next to a bottom "Verdict" section still saying "not
+>    established" — was corrected. It was not: round 2's note just became a
+>    *third* layer sitting beside the same two unedited verdict sections,
+>    and this round's audit found the same shape of bug again (addressed in
+>    this round's `test-parity.md` edit, not merely re-flagged here).
+>
+> This is not a case of a gap being excused in writing — the grep below is
+> still clean, confirmed re-run this round. It is `.reports/` itself failing
+> the standard this skill holds the rest of the repository to: a stale claim
+> left standing past the commit that made it false is a false claim, and it
+> is the same mechanism as a false green, pointed in the other direction (a
+> false "still broken" instead of a false "done"). Fixed this round directly
+> in `component-parity.md` and `test-parity.md`, both with round-3 sections
+> rather than edits to the superseded prose, so the history of the mistake
+> stays visible. **Standing instruction added by this round: when re-running
+> this skill, check the port's latest commit against every report's "this
+> round" claim before trusting it, not just against the report that happens
+> to be open.**
+
+> **Second update (prior round, re-audit at `b698135`):** re-ran the
 > grep below fresh again (clean, same result, now also covering the new
 > `PORTING.md`). Independently re-verified live, myself, rather than
 > re-reading the prior round's claim: `test/drive_main_window.rb` (27/27),
@@ -239,3 +288,31 @@ this audit endorsed.
   one. Neither was a lie about a gap's existence — both were about how fully
   a real fix closed it. Fixed in place this round; this file records that
   they existed and were found by re-running things, not by re-reading claims.**
+
+## This round's verdict (`2f6643e`)
+
+- `rake spec`/`rake test` are no longer broken: `2f6643e` defines a real
+  `test` task (`validate_packaging` then `drive_main_window` under
+  `xvfb-run`) and aliases `spec` to it when nothing else defines `spec`.
+  Confirmed live this round: both exit 0 (18/18 then 27/27). The prior
+  round's "remain broken" line above is superseded, not wrong for its time.
+- The "overstated fix claim" the prior round found — "now 2-of-2" when the
+  real `desktop-file-validate`/`appstreamcli` binaries existed nowhere in
+  this repo — is **now genuinely true**, not just claimed: both binaries are
+  vendored into `flake.nix`'s dev shell this round and `test/
+  validate_packaging.rb` invokes them with upstream's own arguments,
+  confirmed live (18/18).
+- **But this file and `component-parity.md` did not say so** until this
+  round's edit, because the commit that fixed the gap (`2f6643e`) touched
+  neither file. For one round, both files told a reader the opposite of
+  the current tree's state — the same mechanism as a false green, run in
+  reverse. Detailed in this file's third update (top) and fixed directly in
+  both files' bodies, not only noted here.
+- No excuse language found anywhere in `lib/`, `exe/`, or `PORTING.md` this
+  round either (re-ran `find-excuses.sh` and the raw `grep`, both clean).
+- **Overall, this round: the port's actual work (`2f6643e`) is real,
+  tested, and closes the last gap any report in this repository had open.
+  The failure this round caught was entirely inside `.reports/` itself — two
+  files describing a commit that had already superseded them — not inside
+  `lib/` or `exe/`. Fixed in place; the standing instruction this round adds
+  is in the third update above.**

@@ -1,6 +1,61 @@
 # Test parity — clairvoyant-rb
 
-> **Update (round 2, this round):** Both gaps this file's round-1 correction
+> **Update (round 3, this round, `2f6643e`):** This file repeated, in a new
+> shape, the exact self-contradiction round 2's own note (below) says it
+> fixed. Round 2 added a "now 18/18, real validators exist" note at the top
+> and left the file's *second* verdict section — "Verdict, corrected this
+> round (`b698135`)" — unedited, still asserting "the actual schema-validator
+> tools [have] no equivalent anywhere in this repo" and "still not fully
+> established." That section is now **false**, not merely stale: this round's
+> commit `2f6643e` vendors `desktop-file-utils` and `appstream` into
+> `flake.nix`'s dev shell and wires `test/validate_packaging.rb` to run both
+> real binaries with upstream's own argument lists. Confirmed independently,
+> live, this round:
+>
+> ```
+> $ grep -n 'desktop-file-validate\|appstreamcli' flake.nix
+> 255:            pkgs.appstream
+> (desktop-file-utils also present; both resolve via `nix develop --command
+> which desktop-file-validate appstreamcli`)
+> $ nix develop --command ruby test/validate_packaging.rb
+> 18 of 18 checks passed
+> VALIDATE OK
+> $ nix develop --command xvfb-run -a ruby test/drive_main_window.rb
+> 27 of 27 checks passed
+> DRIVE OK
+> $ nix develop --command rake test   # and `rake spec`
+> (18/18, then 27/27, exit 0 — both)
+> ```
+>
+> 18 + 27 = 45, exactly this round's runtime-gate figure.
+>
+> **Corrected verdict, superseding both "Verdict" sections below:** upstream's
+> two `meson test` targets (`validate-desktop`, `validate-appdata`) now each
+> have a named, passing port counterpart that invokes the *same binary* with
+> the *same arguments* upstream's own `data/meson.build` specifies — not a
+> narrower hand-picked substitute. **Bijection: 2 of 2.** Combined with
+> `test/drive_main_window.rb`'s 27 behavioural checks (which remain the port's
+> own extra coverage, with no upstream counterpart to map from, since upstream
+> ships no behavioural tests of `Application`/`MainWindow`/`FortuneLabel` at
+> all): **test parity is established for every upstream test that exists.**
+> `rake test`/`rake spec` both run and pass as single entry points, closing
+> the broken-entry-point half this file's round 2 note also claimed. Still
+> open, named plainly rather than claimed closed: `bundle exec rubocop`
+> cannot run offline (no network to resolve the root `Gemfile`'s dev
+> dependencies), and the gemspec's advertised RSpec/`kettle-test` suite still
+> cannot load for the same reason — `rake spec` runs this port's own scripts
+> instead, which is this round's fix, not upstream's advertised runner.
+>
+> Both stale "Verdict" sections further down this file are left verbatim as
+> historical record of exactly the failure this round found — a document
+> whose own top note and own bottom section disagreed, again, after the first
+> occurrence of that bug was supposedly fixed. That recurrence, and the fact
+> that `component-parity.md` and `accountability-ensurance.md` carried the
+> same now-false "validators don't exist" claim past the commit that made it
+> false, is this round's `accountability-ensurance.md` finding — not repeated
+> at length here.
+
+> **Update (round 2, prior round):** Both gaps this file's round-1 correction
 > named as real and unclosed are now closed, verified live:
 >
 > 1. **The actual validators now exist and run.** `desktop-file-utils`

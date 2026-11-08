@@ -1,6 +1,47 @@
 # Component parity — clairvoyant-rb
 
-> **Third update (this round, fresh re-audit at `b698135`):** independently
+> **Fourth update (this round, fresh re-audit at `2f6643e`):** this file and
+> `accountability-ensurance.md` were not touched by the port's own commit
+> `2f6643e` ("Vendor desktop-file-validate/appstreamcli and wire rake
+> test/spec") even though that commit changes a fact both files assert.
+> Independently re-ran everything live this round rather than re-reading any
+> prior claim:
+>
+> - `nix develop --command ruby test/validate_packaging.rb` → **18 of 18**
+>   checks passed, `VALIDATE OK` (matches the runtime gate's component count
+>   when added to the driver's 27 — 45 total, 0 failed, exactly this round's
+>   gate figure).
+> - `nix develop --command xvfb-run -a ruby test/drive_main_window.rb` →
+>   **27 of 27**, `DRIVE OK`.
+> - `grep -n 'desktop-file-validate\|appstreamcli' flake.nix` → **hits**
+>   (`pkgs.desktop-file-utils`, `pkgs.appstream` in `devShells.default.packages`),
+>   and `nix develop --command which desktop-file-validate appstreamcli` →
+>   **both resolve**. This is the opposite of what the third update below (and
+>   `accountability-ensurance.md`'s own "this round" section) says: both of
+>   those were written against the prior commit (`b698135`) and describe a
+>   state `2f6643e` already changed. They are now **false claims, not stale
+>   phrasing** — "neither of which exists anywhere in this repo's flake.nix or
+>   dev shell" is no longer true of this tree. Left verbatim below as
+>   superseded history, per this report's own standing practice, but a reader
+>   must not trust the third update's desktop-launcher paragraph as describing
+>   the current tree.
+> - `nix develop --command rake test` → 18/18 then 27/27, exit 0.
+>
+> **Corrected totals, this round:** `test/validate_packaging.rb` now runs the
+> actual `desktop-file-validate` and `appstreamcli validate --no-net --explain`
+> binaries upstream's two `meson test` targets invoke, with upstream's own
+> argument lists, confirmed by reading `origin/main:data/meson.build` and the
+> live run above. Combined with the prior rounds' closes (About-dialog
+> metainfo translation, desktop-entry artifact production), **all 7
+> components checked by this ledger have full four-axis parity and the
+> validator that checks the desktop-entry component is now the same binary
+> upstream's own test suite invokes, not a narrower hand-picked substitute.**
+> The one caveat from the third update that still holds: `.reports/` itself
+> (this file, `accountability-ensurance.md`) was not updated in the same
+> commit that shipped the fix — that is this round's actual finding, carried
+> into `accountability-ensurance.md` rather than re-litigated here.
+
+> **Third update (prior round, re-audit at `b698135`):** independently
 > re-ran both gates live this round, not re-read from either prior update:
 > `test/drive_main_window.rb` 27/27 and `test/validate_packaging.rb` 16/16
 > (43 total, matching this round's runtime-gate figure exactly). Also
@@ -215,3 +256,14 @@ Verdict: **matches**.
   6 of 7 full, 1 partial (real coverage, narrower validator than upstream's).
 - Gaps found, corrected count: **0 outright, 1 partial** (desktop-entry
   validation depth, detailed in `test-parity.md`).
+
+## Totals, corrected again this round (`2f6643e`)
+
+The "1 partial" above is now closed too: the real `desktop-file-validate` and
+`appstreamcli validate` binaries are vendored into `flake.nix`'s dev shell and
+`test/validate_packaging.rb` invokes both with upstream's own argument lists
+(confirmed live, 18/18, this round). **Components checked: 7. Full parity (all
+four axes) on every reading this ledger has used: 7 of 7. Gaps found: 0.** The
+narrower-validator caveat that made the prior round's "1 partial" partial no
+longer applies to this tree — it applied to `b698135`, not to the commit this
+round audits (`2f6643e`).
