@@ -23,3 +23,11 @@ jobs:
 
       - name: Run the port's test suite (rake test: validate_packaging + drive_main_window)
         run: nix develop --command rake test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+

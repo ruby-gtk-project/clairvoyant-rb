@@ -96,11 +96,6 @@ Gem::Specification.new do |spec|
   spec.executables = ["clairvoyant"]
   spec.require_paths = ["lib"]
 
-  # Runtime dependencies: the GTK4/Libadwaita bindings the app is built on
-  # (lib/*.rb requires "adwaita", and lib/application.rb reaches Gio and Gdk
-  # through it), plus the pure-Ruby gettext gem lib/intl.rb binds the app's
-  # own strings through. Mirrors nix/Gemfile, the runtime closure bundix
-  # locks against.
   spec.add_dependency("adwaita", "~> 4.3")
   spec.add_dependency("gettext", "~> 3.5")
   spec.add_dependency("glib2", "~> 4.3")
